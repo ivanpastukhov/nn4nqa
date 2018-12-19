@@ -378,7 +378,7 @@ class QAMatching(nn.Module):
 
         self.num_steps = num_steps
         self.pooling = pooling  # [raw, max, last, mean]
-
+        ## TODO: Разобраться почему в оригинале self.att_size = 2 * hidden_size
         self.att_size = hidden_size
         if att_method == 'sequential':
             self.att_layer = SequentialAttention(hidden_size=self.att_size)
