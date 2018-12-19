@@ -8,6 +8,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.autograd import Variable
 from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence
+import logging
 
 
 class Preprocessor(nn.Module):
@@ -76,12 +77,14 @@ class Encoder(nn.Module):
 
     def forward(self, inputs, input_length, pooling='max'):
         """"""
+        logging.debug(inputs)
         embedded = self.embedding(inputs)  # batch x seq x dim
+        logging.debug(embedded.shape)
         embedded = embedded.permute(1, 0, 2)  # seq x batch x dim
 
         batch_size = embedded.size()[1]
         state_shape = self.n_cells, batch_size, self.hidden_size
-        h0 = c0 = Variable(embedded.data.new(*state_shape).zero_()).cuda()
+        h0 = c0 = Variable(embedded.data.new(*state_shape).zero_())
 
         packed_input = pack_padded_sequence(embedded, input_length.cpu().numpy())
         packed_output, (ht, ct) = self.encoder(packed_input, (h0, c0))
@@ -194,7 +197,7 @@ class SequentialAttention(nn.Module):
 
         batch_size = y.size()[1]
         state_shape = 2, batch_size, self.hidden_size
-        h0 = c0 = Variable(y.data.new(*state_shape).zero_()).cuda()
+        h0 = c0 = Variable(y.data.new(*state_shape).zero_())
 
         outputs, _ = self.encoder(y, (h0, c0))
 
@@ -326,8 +329,11 @@ class MultiHopAttention(nn.Module):
         m_u[0] = torch.mean(inputs, 1) * qvector if qvector is not None else torch.mean(inputs, 1)
         u_att = [None] * (self.num_steps + 1)
         u_att[0] = torch.mean(inputs, 1)
-
-        M = torch.bmm(inputs, self.W_u_1.unsqueeze(0).expand(inputs.size(0), *self.W_u_1.size()))  # b x l x h
+        arg2 = self.W_u_1.unsqueeze(0).expand(inputs.size(0), *self.W_u_1.size())
+        W_u_1_shape = self.W_u_1.shape
+        arg2_shape = arg2.shape
+        intputs_shape = inputs.shape
+        M = torch.bmm(inputs, arg2)  # b x l x h
         M = F.tanh(M)
         M = M * F.tanh(torch.mm(m_u[0], self.W_u_m_1)).unsqueeze(1).expand_as(M)
         U = torch.bmm(M, self.W_u_h_1.unsqueeze(0).expand(M.size(0), *self.W_u_h_1.size()))
@@ -353,7 +359,7 @@ class MultiHopAttention(nn.Module):
             U = torch.bmm(M, self.W_u_h_3.unsqueeze(0).expand(M.size(0), *self.W_u_h_3.size()))
             alpha = F.softmax(U, dim=1)  # batch x len x 1
             u_att[3] = torch.sum(inputs * alpha, 1)
-
+        print('ATT: \n', u_att)
         return u_att
 
 
@@ -373,7 +379,7 @@ class QAMatching(nn.Module):
         self.num_steps = num_steps
         self.pooling = pooling  # [raw, max, last, mean]
 
-        self.att_size = 2 * hidden_size
+        self.att_size = hidden_size
         if att_method == 'sequential':
             self.att_layer = SequentialAttention(hidden_size=self.att_size)
         elif att_method == 'mlp':
@@ -386,7 +392,7 @@ class QAMatching(nn.Module):
         self.sim_layer = nn.CosineSimilarity(dim=1, eps=1e-8)
 
     def single_forward(self, q_batch, q_batch_length, pooling='max'):
-        q_batch_length = torch.cuda.LongTensor(q_batch_length)
+        q_batch_length = torch.LongTensor(q_batch_length)
         q_batch_length, q_perm_idx = q_batch_length.sort(0, descending=True)
         q_batch = q_batch[q_perm_idx]
 
@@ -394,7 +400,7 @@ class QAMatching(nn.Module):
         if pooling == 'raw':
             q_out = q_out.permute(1, 0, 2)  # len x batch x h --> batch x len x h
 
-        q_inverse_idx = torch.zeros(q_perm_idx.size()[0]).long().cuda()
+        q_inverse_idx = torch.zeros(q_perm_idx.size()[0]).long()
         for i in range(q_perm_idx.size()[0]):
             q_inverse_idx[q_perm_idx[i]] = i
 
@@ -409,7 +415,7 @@ class QAMatching(nn.Module):
         # q_out[0] = torch.max(q_out_raw, 1)[0]
         # q_out[1] = self.single_forward2(q_batch, q_batch_length, pooling='last')
         # q_out[2] = torch.mean(q_out_raw, 1)
-
+        q_out_raw_shape = q_out_raw.shape
         q_out = self.qatt_layer(q_out_raw)
 
         d_out = self.single_forward(d_batch, d_batch_length, pooling='raw')  # b x l x h
