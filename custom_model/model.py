@@ -2,7 +2,7 @@ from torch import nn
 import torch
 from torch.nn import functional as F
 import logging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.WARNING)
 
 class Encoder(nn.Module):
     def __init__(self, vocab_size, embed_dim, hidden_size, bidirectional=False, pretrained_emb=False,
@@ -34,9 +34,22 @@ class Encoder(nn.Module):
         outputs, _ = self.rnn(embedded, hidden)
         return outputs
 
-class SimpleNet(nn.Module):
+
+class BaseModel(nn.Module):
+    def __init__(self):
+        super().__init__()
+
+    def fit(self):
+        x = 3
+        self._fit()  # custom logic
+
+    def _fit(self):
+        raise NotImplementedError
+
+
+class SimpleNet(BaseModel):
     def __init__(self, vocab_size, embed_dim, hidden_size):
-        super(SimpleNet, self).__init__()
+        super().__init__()
         self.vocab_size = vocab_size
         self.embed_dim = embed_dim
         self.hidden_size = hidden_size
@@ -56,5 +69,16 @@ class SimpleNet(nn.Module):
         outputs_r = torch.mean(outputs_r, 1)
         concatenated = torch.cat((outputs_l, outputs_r), 1)
         fc = self.hidden(concatenated)
-        ans = F.softmax(self.answer(fc))
+        ans = F.softmax(self.answer(fc), dim=1)
         return ans
+
+    def _fit(self):
+        x = 4
+
+
+class Simmle2Net(BaseModel):
+    def __init__(self, vocab_size, embed_dim, hidden_size):
+        super().__init__()
+
+    def _fit(self):
+        x = 5

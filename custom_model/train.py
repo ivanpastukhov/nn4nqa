@@ -22,7 +22,7 @@ class Train():
                 y_train_batch = y_train[lb:rb]
                 y_pred_batch = model(x_q_batch, x_a_batch)
                 loss = loss_function(y_pred_batch, y_train_batch)
-                self.losses.append(loss)
+                self.losses.append(loss.item())
                 optimizer.zero_grad()
                 loss.backward()
                 optimizer.step()
