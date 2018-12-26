@@ -68,7 +68,7 @@ class Encoder(nn.Module):
         else:
             self.n_cells = 1
 
-        self.embedding = nn.Embedding(vocab_size, embed_size, padding_idx=0,requires_grad=True)
+        self.embedding = nn.Embedding(vocab_size, embed_size, padding_idx=0)
         # initialize with pretrained
         if pretrained_emb is not None:
             self.embedding.weight.data.copy_(torch.from_numpy(pretrained_emb))
@@ -112,11 +112,11 @@ class SelfAttentionLayer(nn.Module):
         self.hidden_size = hidden_size
         self.hops = hops
 
-        self.W_w = nn.Parameter(torch.FloatTensor(self.hidden_size, self.hidden_size,requires_grad=True),requires_grad=True)
+        self.W_w = nn.Parameter(torch.FloatTensor(self.hidden_size, self.hidden_size))
 
-        self.b_w = nn.Parameter(torch.FloatTensor(self.hidden_size, requires_grad=True),requires_grad=True)
+        self.b_w = nn.Parameter(torch.FloatTensor(self.hidden_size))
 
-        self.U_w = nn.Parameter(torch.FloatTensor(self.hidden_size, self.hops, requires_grad=True),requires_grad=True)
+        self.U_w = nn.Parameter(torch.FloatTensor(self.hidden_size, self.hops))
 
         self.reset_parameters()
 
