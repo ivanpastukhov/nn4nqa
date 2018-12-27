@@ -38,6 +38,8 @@ class Encoder(nn.Module):
 class BaseModel(nn.Module):
     def __init__(self):
         super().__init__()
+        self.losses = []
+        self.steps = 0
 
     def fit(self, X_left, X_right, y_train, batch_size, epochs, loss_function, optimizer, device):
         """
@@ -59,6 +61,7 @@ class BaseModel(nn.Module):
         len_dataset = len(X_left)
         step = 0
         optimizer = optimizer(self.parameters())
+        self.to(device)
         for epoch in range(epochs):
             lb = 0
             rb = batch_size
