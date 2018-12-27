@@ -16,7 +16,7 @@ class Train():
         for epoch in range(epochs):
             lb = 0
             rb = batch_size
-            while rb <= len_dataset:
+            while lb <= len_dataset:
                 x_q_batch = X_train_q[lb:rb].to(device)
                 x_a_batch = X_train_a[lb:rb].to(device)
                 y_train_batch = y_train[lb:rb].to(device)

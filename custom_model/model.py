@@ -39,13 +39,44 @@ class BaseModel(nn.Module):
     def __init__(self):
         super().__init__()
 
-    def fit(self):
-        x = 3
-        self._fit()  # custom logic
+    def fit(self, X_left, X_right, y_train, batch_size, epochs, loss_function, optimizer, device):
+        """
+        Fit the model.
+        :param X_left: pytorch.Tensor object, sequences of encoded phrases. Usually questions.
+        :param X_right: pytorch.Tensor object, sequences of encoded phrases. Usually answers.
+        :param y_train: pytorch.Tensor object, array of target labels
+        :param batch_size: int, size of batch.
+        :param epochs: int, number of epochs.
+        :param loss_function: function, scalar must be returned.
+        :param optimizer: torch optimizer object
+        :param device: str, 'cuda' or 'cpu'
+        :return:
+        """
+        self._fit(X_left, X_right, y_train, batch_size, epochs, loss_function, optimizer, device)  # custom logic
 
-    def _fit(self):
-        raise NotImplementedError
-
+    def _fit(self, X_left, X_right, y_train, batch_size, epochs, loss_function, optimizer, device):
+        assert len(X_left) == len(y_train) == len(X_right)
+        len_dataset = len(X_left)
+        step = 0
+        optimizer = optimizer(self.parameters())
+        for epoch in range(epochs):
+            lb = 0
+            rb = batch_size
+            while lb <= len_dataset:
+                x_l_batch = X_left[lb:rb].to(device)
+                x_r_batch = X_right[lb:rb].to(device)
+                y_train_batch = y_train[lb:rb].to(device)
+                y_pred_batch = self.__call__(x_l_batch, x_r_batch)
+                loss = loss_function(y_pred_batch, y_train_batch).to(device)
+                self.losses.append(loss.item())
+                optimizer.zero_grad()
+                loss.backward()
+                optimizer.step()
+                rb += batch_size
+                lb += batch_size
+                step += 1
+                self.steps.append(step)
+            print('Epoch: {}, loss: {}'.format(epoch, loss))
 
 class SimpleNet(BaseModel):
     def __init__(self, vocab_size, embed_dim, hidden_size):
@@ -72,11 +103,11 @@ class SimpleNet(BaseModel):
         ans = F.softmax(self.answer(fc), dim=1)
         return ans
 
-    def _fit(self):
-        x = 4
+    # def _fit(self):
+    #     x = 4
 
 
-class Simmle2Net(BaseModel):
+class Simple2Net(BaseModel):
     def __init__(self, vocab_size, embed_dim, hidden_size):
         super().__init__()
 
