@@ -39,7 +39,7 @@ class BaseModel(nn.Module):
     def __init__(self):
         super().__init__()
         self.losses = []
-        self.steps = 0
+        self.steps = []
 
     def fit(self, X_left, X_right, y_train, batch_size, epochs, loss_function, optimizer, device):
         """
