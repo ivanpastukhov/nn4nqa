@@ -18,10 +18,12 @@ def run():
     df_test = pd.read_pickle('./data/processed/wikiqa_df_test.pickle')
     voc = read_pickle('./data/processed/vocabulary.pickle')
 
+    df_train = df_train.iloc[:100]
+
     print('Train shape: {} \n\
     Test shape: {}'.format(df_train.shape, df_test.shape))
 
-    net = SimpleNet(voc['voc_len'], 256, 128)
+    net = SimpleNet(voc['voc_len'], 64, 64)
 
     Xq = np.array(df_train.Question_encoded.values.tolist())
     Xa = np.array(df_train.Sentence_encoded.values.tolist())

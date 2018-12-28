@@ -4,6 +4,7 @@ from torch.nn import functional as F
 import logging
 logging.basicConfig(level=logging.WARNING)
 import sys
+import time
 
 class Encoder(nn.Module):
     def __init__(self, vocab_size, embed_dim, hidden_size, bidirectional=False, pretrained_emb=False,
@@ -63,10 +64,12 @@ class BaseModel(nn.Module):
         step = 0
         optimizer = optimizer(self.parameters())
         self.to(device)
+        print('Training...')
         for epoch in range(epochs):
+            start_time = time.time()
             lb = 0
             rb = batch_size
-            while lb <= len_dataset:
+            while lb < len_dataset:
                 x_l_batch = X_left[lb:rb].to(device)
                 x_r_batch = X_right[lb:rb].to(device)
                 y_train_batch = y_train[lb:rb].to(device)
@@ -82,9 +85,12 @@ class BaseModel(nn.Module):
                 step += 1
                 self.steps.append(step)
                 # progress bar
-                sys.stdout.write("{} of {}".format(lb, len_dataset))
+                sys.stdout.write("")
                 sys.stdout.flush()
-            print('Epoch: {}, loss: {}'.format(epoch, loss))
+            end_time = time.time()
+            print('Epoch: {}, loss: {:0.5f}. {:0.2} [s] per epoch'.format(epoch, loss, end_time-start_time))
+        print('Done!')
+
 
 class SimpleNet(BaseModel):
     def __init__(self, vocab_size, embed_dim, hidden_size):
