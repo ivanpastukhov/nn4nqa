@@ -3,6 +3,7 @@ import torch
 from torch.nn import functional as F
 import logging
 logging.basicConfig(level=logging.WARNING)
+import sys
 
 class Encoder(nn.Module):
     def __init__(self, vocab_size, embed_dim, hidden_size, bidirectional=False, pretrained_emb=False,
@@ -75,10 +76,14 @@ class BaseModel(nn.Module):
                 optimizer.zero_grad()
                 loss.backward()
                 optimizer.step()
+                # update counters
                 rb += batch_size
                 lb += batch_size
                 step += 1
                 self.steps.append(step)
+                # progress bar
+                sys.stdout.write("{} of {}".format(lb, len_dataset))
+                sys.stdout.flush()
             print('Epoch: {}, loss: {}'.format(epoch, loss))
 
 class SimpleNet(BaseModel):
