@@ -1,10 +1,76 @@
 from torch import nn
 import torch
 from torch.nn import functional as F
+from torch.autograd import Variable
 import logging
-logging.basicConfig(level=logging.WARNING)
+logging.basicConfig(level=logging.DEBUG)
 import sys
 import time
+import math
+
+
+# Источники: https://arxiv.org/pdf/1706.03762.pdf - Attention Is All You Need, §3.5
+#            "How to code The Transformer in Pytorch" - Samuel Lynn-Evans
+#            "The Annotated Transformer" - http://nlp.seas.harvard.edu/2018/04/03/attention.html
+#            "The Illustrated Transformer" - Jay Alammar, http://jalammar.github.io/illustrated-transformer/
+
+
+class Attention(nn.Module):
+    def __init__(self, hidden_size):
+        super(Attention, self).__init__()
+        self.attn = nn.Linear(hidden_size, hidden_size)
+
+    def score(self, hidden, output):
+        logging.debug('hidden.size(): {}'.format(hidden.size()))
+        logging.debug('output.size(): {}'.format(output.size()))
+        energy = self.attn(output)
+        score = torch.sum(hidden * energy, dim=2)
+        return score
+
+    def forward(self, hidden, outputs):
+        energies = self.score(hidden, outputs)
+        energies = energies.t()
+        return F.softmax(energies, dim=1).unsqueeze(1)
+
+
+# class SelfAttention(nn.Module):
+
+
+
+class PositionalEncoding(nn.Module):
+    # Нужен для работы self-Attention.
+    # Positional Encoding Matrix имеет тот же размер, что и Input Sentence Matrix:
+    # (seq_len x emb_len) = (seq_len x i_len)
+    # Источники: https://arxiv.org/pdf/1706.03762.pdf - Attention Is All You Need, §3.5
+
+    def __init__(self, d_model, dropout, max_len=5000):
+        """
+        Positional encoding class.
+        :param d_model: emb_size in order to pos_encoding vector has same len as embedding to be summed together.
+        :param dropout: dropout rate.
+        :param max_len: sentence's size.
+
+        Return:
+        Input with positional encoding. Has same size as in input.
+        """
+        super(PositionalEncoding, self).__init__()
+        self.dropout = nn.Dropout(p=dropout)
+
+        # Compute the positional encodings once in log space.
+        pe = torch.zeros(max_len, d_model)
+        position = torch.arange(0, max_len).unsqueeze(1)
+        div_term = torch.exp(torch.arange(0, d_model, 2) *
+                             -(math.log(10000.0) / d_model))
+        pe[:, 0::2] = torch.sin(position * div_term)
+        pe[:, 1::2] = torch.cos(position * div_term)
+        pe = pe.unsqueeze(0)
+        self.register_buffer('pe', pe)
+
+    def forward(self, x):
+        x = x + Variable(self.pe[:, :x.size(1)],
+                         requires_grad=False)
+        return self.dropout(x)
+
 
 class Encoder(nn.Module):
     def __init__(self, vocab_size, embed_dim, hidden_size, bidirectional=False, pretrained_emb=False,
@@ -117,13 +183,4 @@ class SimpleNet(BaseModel):
         ans = F.softmax(self.answer(fc), dim=1)
         return ans
 
-    # def _fit(self):
-    #     x = 4
 
-
-class Simple2Net(BaseModel):
-    def __init__(self, vocab_size, embed_dim, hidden_size):
-        super().__init__()
-
-    def _fit(self):
-        x = 5
