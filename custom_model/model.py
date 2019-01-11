@@ -21,10 +21,11 @@ class Attention(nn.Module):
         self.attn = nn.Linear(hidden_size, hidden_size)
 
     def score(self, hidden, output):
-        logging.debug('hidden.size(): {}'.format(hidden.size()))
-        logging.debug('output.size(): {}'.format(output.size()))
         energy = self.attn(output)
-        score = torch.sum(hidden * energy, dim=2)
+        # Permute: (batch_size, seq_len, hidden_size) -> (batch_size, hidden_size, seq_len) для перемножения тензоров
+        output = output.permute(0, 2, 1)
+        # Permute: (batch_size, 1, seq_len) -> (batch_size, seq_len, 1)
+        score = torch.bmm(hidden, output).permute(0,2,1)
         return score
 
     def forward(self, hidden, outputs):
@@ -100,6 +101,7 @@ class Encoder(nn.Module):
         # TODO: torch.nn.utils.rnn.pack_padded_sequence
         embedded = self.embedding(input_seq)
         outputs, _ = self.rnn(embedded, hidden)
+        print(outputs.size())
         return outputs
 
 
