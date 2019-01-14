@@ -23,9 +23,10 @@ class Attention(nn.Module):
     def score(self, hidden, output):
         energy = self.attn(output)
         # Permute: (batch_size, seq_len, hidden_size) -> (batch_size, hidden_size, seq_len) для перемножения тензоров
-        output = output.permute(0, 2, 1)
+        energy = energy.permute(0, 2, 1)
         # Permute: (batch_size, 1, seq_len) -> (batch_size, seq_len, 1)
-        score = torch.bmm(hidden, output).permute(0,2,1)
+        score = torch.bmm(hidden, energy).permute(0,2,1)
+        logging.debug('Score size: {}'.format(score.size()))
         return score
 
     def forward(self, hidden, outputs):
@@ -34,8 +35,30 @@ class Attention(nn.Module):
         return F.softmax(energies, dim=1).unsqueeze(1)
 
 
-# class SelfAttention(nn.Module):
+class SelfAttention(nn.Module):
+    def __init__(self, n_heads, hidden_size, dropout=None, positional_encoding=False):
+        if dropout:
+            # TODO: dropout
+            raise NotImplementedError()
+        if positional_encoding:
+            # TODO: positional encoding
+            raise NotImplementedError()
+        pass
 
+    @staticmethod
+    def self_attention(query, key, value):
+        d_k = value.size(-1)
+        logging.debug('query size: {}'.format(query.size()))
+        logging.debug('key size: {}'.format(key.size()))
+        logging.debug('value size: {}'.format(value.size()))
+        score = torch.bmm(query, key.permute(0,2,1))
+        score = score / math.sqrt(d_k)
+        # TODO: потенциально слабое место с направлением softmax'a.
+        p_att = F.softmax(score, dim=-1)
+        logging.debug('p_att size: {}'.format(p_att.size()))
+        score = torch.bmm(p_att, value)
+        logging.debug('Score size: {}'.format(score.size()))
+        return score, p_att
 
 
 class PositionalEncoding(nn.Module):
@@ -44,10 +67,10 @@ class PositionalEncoding(nn.Module):
     # (seq_len x emb_len) = (seq_len x i_len)
     # Источники: https://arxiv.org/pdf/1706.03762.pdf - Attention Is All You Need, §3.5
 
-    def __init__(self, d_model, dropout, max_len=5000):
+    def __init__(self, hidden_size, dropout, max_len=5000):
         """
         Positional encoding class.
-        :param d_model: emb_size in order to pos_encoding vector has same len as embedding to be summed together.
+        :param hidden_size: emb_size in order to pos_encoding vector has same len as embedding to be summed together.
         :param dropout: dropout rate.
         :param max_len: sentence's size.
 
@@ -58,10 +81,10 @@ class PositionalEncoding(nn.Module):
         self.dropout = nn.Dropout(p=dropout)
 
         # Compute the positional encodings once in log space.
-        pe = torch.zeros(max_len, d_model)
+        pe = torch.zeros(max_len, hidden_size)
         position = torch.arange(0, max_len).unsqueeze(1)
-        div_term = torch.exp(torch.arange(0, d_model, 2) *
-                             -(math.log(10000.0) / d_model))
+        div_term = torch.exp(torch.arange(0, hidden_size, 2) *
+                             -(math.log(10000.0) / hidden_size))
         pe[:, 0::2] = torch.sin(position * div_term)
         pe[:, 1::2] = torch.cos(position * div_term)
         pe = pe.unsqueeze(0)
@@ -70,6 +93,7 @@ class PositionalEncoding(nn.Module):
     def forward(self, x):
         x = x + Variable(self.pe[:, :x.size(1)],
                          requires_grad=False)
+        logging.debug('PE x size: {}'.format(x.size()))
         return self.dropout(x)
 
 
@@ -101,7 +125,6 @@ class Encoder(nn.Module):
         # TODO: torch.nn.utils.rnn.pack_padded_sequence
         embedded = self.embedding(input_seq)
         outputs, _ = self.rnn(embedded, hidden)
-        print(outputs.size())
         return outputs
 
 
