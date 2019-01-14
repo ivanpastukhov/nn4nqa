@@ -3,10 +3,11 @@ import torch
 from torch.nn import functional as F
 from torch.autograd import Variable
 import logging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.WARNING)
 import sys
 import time
 import math
+import copy
 
 
 # Источники: https://arxiv.org/pdf/1706.03762.pdf - Attention Is All You Need, §3.5
@@ -14,6 +15,9 @@ import math
 #            "The Annotated Transformer" - http://nlp.seas.harvard.edu/2018/04/03/attention.html
 #            "The Illustrated Transformer" - Jay Alammar, http://jalammar.github.io/illustrated-transformer/
 
+
+def copy_layer(layer, n):
+    return nn.ModuleList([copy.deepcopy(layer) for _ in range(n)])
 
 class Attention(nn.Module):
     def __init__(self, hidden_size):
@@ -26,7 +30,6 @@ class Attention(nn.Module):
         energy = energy.permute(0, 2, 1)
         # Permute: (batch_size, 1, seq_len) -> (batch_size, seq_len, 1)
         score = torch.bmm(hidden, energy).permute(0,2,1)
-        logging.debug('Score size: {}'.format(score.size()))
         return score
 
     def forward(self, hidden, outputs):
@@ -35,8 +38,8 @@ class Attention(nn.Module):
         return F.softmax(energies, dim=1).unsqueeze(1)
 
 
-class SelfAttention(nn.Module):
-    def __init__(self, n_heads, hidden_size, dropout=None, positional_encoding=False):
+class SelfAttention():
+    def __init__(self, dropout=None, positional_encoding=False):
         if dropout:
             # TODO: dropout
             raise NotImplementedError()
@@ -48,17 +51,48 @@ class SelfAttention(nn.Module):
     @staticmethod
     def self_attention(query, key, value):
         d_k = value.size(-1)
-        logging.debug('query size: {}'.format(query.size()))
-        logging.debug('key size: {}'.format(key.size()))
-        logging.debug('value size: {}'.format(value.size()))
         score = torch.bmm(query, key.permute(0,2,1))
         score = score / math.sqrt(d_k)
         # TODO: потенциально слабое место с направлением softmax'a.
         p_att = F.softmax(score, dim=-1)
-        logging.debug('p_att size: {}'.format(p_att.size()))
         score = torch.bmm(p_att, value)
-        logging.debug('Score size: {}'.format(score.size()))
         return score, p_att
+
+
+class MultiheadAttention(nn.Module):
+    def __init__(self, n_heads, hidden_size, d_size=64, dropout=None):
+        super(MultiheadAttention, self).__init__()
+        if dropout:
+            # TODO: dropout
+            raise NotImplementedError
+        self.n_heads = n_heads
+        self.hidden_size = hidden_size
+        self.d_size = d_size
+        self.attention = SelfAttention().self_attention
+        # Количество линейных слоёв = (количество_Heads) * (1_query + 1_key + 1_value)
+        self.linear_query = copy_layer(nn.Linear(self.hidden_size, self.d_size), self.n_heads)
+        self.linear_key = copy_layer(nn.Linear(self.hidden_size, self.d_size), self.n_heads)
+        self.linear_value = copy_layer(nn.Linear(self.hidden_size, self.d_size), self.n_heads)
+        self.att_probas = []
+        self.scores = []
+        self.output_linear = nn.Linear(n_heads*d_size, hidden_size)
+
+    def forward(self, query, key, value):
+        for head in range(self.n_heads):
+            q = self.linear_query[head](query)
+            k = self.linear_key[head](key)
+            v = self.linear_value[head](value)
+            score, p_att = self.attention(q,k,v)
+            self.att_probas.append(p_att)
+            self.scores.append(score)
+        scores = torch.cat(self.scores, -1)
+        logging.debug('Scores shape: {}'.format(scores.size()))
+        scores = self.output_linear(scores)
+        logging.debug('Scores shape: {}'.format(scores.size()))
+        att_probas = self.att_probas
+        self.scores = []
+        self.att_probas = []
+        return scores
 
 
 class PositionalEncoding(nn.Module):
@@ -93,7 +127,6 @@ class PositionalEncoding(nn.Module):
     def forward(self, x):
         x = x + Variable(self.pe[:, :x.size(1)],
                          requires_grad=False)
-        logging.debug('PE x size: {}'.format(x.size()))
         return self.dropout(x)
 
 
@@ -200,6 +233,24 @@ class SimpleNet(BaseModel):
 
     def forward(self, input_seq_l, input_seq_r):
         outputs_l = self.encoder_l(input_seq_l)
+        outputs_l = torch.mean(outputs_l, 1)
+        outputs_r = self.encoder_r(input_seq_r)
+        outputs_r = torch.mean(outputs_r, 1)
+        concatenated = torch.cat((outputs_l, outputs_r), 1)
+        fc = self.hidden(concatenated)
+        ans = F.softmax(self.answer(fc), dim=1)
+        return ans
+
+class SAttendedSimpleNet(SimpleNet):
+    def __init__(self, vocab_size, embed_dim, rnn_hidden_size,
+                 attention_size, n_heads):
+        super(SAttendedSimpleNet, self).__init__(vocab_size, embed_dim,
+                                                 rnn_hidden_size)
+        self.l_attention = MultiheadAttention(n_heads, rnn_hidden_size,
+                                              d_size=attention_size)
+    def forward(self, input_seq_l, input_seq_r):
+        outputs_l = self.encoder_l(input_seq_l)
+        outputs_l = self.l_attention(outputs_l, outputs_l, outputs_l)
         outputs_l = torch.mean(outputs_l, 1)
         outputs_r = self.encoder_r(input_seq_r)
         outputs_r = torch.mean(outputs_r, 1)
