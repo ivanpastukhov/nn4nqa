@@ -69,7 +69,6 @@ class MultiheadAttention(nn.Module):
         self.hidden_size = hidden_size
         self.d_size = d_size
         self.attention = SelfAttention().self_attention
-        # Количество линейных слоёв = (количество_Heads) * (1_query + 1_key + 1_value)
         self.linear_query = copy_layer(nn.Linear(self.hidden_size, self.d_size), self.n_heads)
         self.linear_key = copy_layer(nn.Linear(self.hidden_size, self.d_size), self.n_heads)
         self.linear_value = copy_layer(nn.Linear(self.hidden_size, self.d_size), self.n_heads)
@@ -92,7 +91,7 @@ class MultiheadAttention(nn.Module):
         att_probas = self.att_probas
         self.scores = []
         self.att_probas = []
-        return scores
+        return scores, att_probas
 
 
 class PositionalEncoding(nn.Module):
@@ -248,9 +247,10 @@ class SAttendedSimpleNet(SimpleNet):
                                                  rnn_hidden_size)
         self.l_attention = MultiheadAttention(n_heads, rnn_hidden_size,
                                               d_size=attention_size)
+        self.l_probas = None
     def forward(self, input_seq_l, input_seq_r):
         outputs_l = self.encoder_l(input_seq_l)
-        outputs_l = self.l_attention(outputs_l, outputs_l, outputs_l)
+        outputs_l, self.l_probas = self.l_attention(outputs_l, outputs_l, outputs_l)
         outputs_l = torch.mean(outputs_l, 1)
         outputs_r = self.encoder_r(input_seq_r)
         outputs_r = torch.mean(outputs_r, 1)
