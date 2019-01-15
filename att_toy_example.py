@@ -7,7 +7,7 @@ torch.manual_seed(42)
 
 net = Attention(8)
 encod = PositionalEncoding(8, 0.2, 7)
-selfatt = SelfAttention(3, 8)
+selfatt = SelfAttention()
 
 hidden = torch.randn((3, 1, 8))
 outputs = torch.randn((3, 7, 8))
@@ -15,7 +15,7 @@ outputs = torch.randn((3, 7, 8))
 # print('Results: \n', net(hidden, outputs))
 # print(encod(outputs).size())
 
-q = torch.randn((3, 7, 5))
+q = torch.randn((3, 9, 5))
 k = torch.randn((3, 7, 5))
 v = torch.randn((3, 7, 5))
 scores, probas = selfatt.self_attention(q,k,v)

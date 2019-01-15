@@ -7,17 +7,11 @@ logging.basicConfig(level=logging.WARNING)
 import sys
 import time
 import math
-import copy
-
 
 # Источники: https://arxiv.org/pdf/1706.03762.pdf - Attention Is All You Need, §3.5
 #            "How to code The Transformer in Pytorch" - Samuel Lynn-Evans
 #            "The Annotated Transformer" - http://nlp.seas.harvard.edu/2018/04/03/attention.html
 #            "The Illustrated Transformer" - Jay Alammar, http://jalammar.github.io/illustrated-transformer/
-
-
-def copy_layer(layer, n):
-    return nn.ModuleList([copy.deepcopy(layer) for _ in range(n)])
 
 class Attention(nn.Module):
     def __init__(self, hidden_size):
@@ -60,35 +54,44 @@ class SelfAttention():
 
 
 class MultiheadAttention(nn.Module):
-    def __init__(self, n_heads, hidden_size, d_size=64, dropout=None):
+    def __init__(self, n_heads, emb_size, att_size=64, dropout=None):
         super(MultiheadAttention, self).__init__()
         if dropout:
             # TODO: dropout
             raise NotImplementedError
         self.n_heads = n_heads
-        self.hidden_size = hidden_size
-        self.d_size = d_size
+        self.emb_size = emb_size
+        self.att_size = att_size
         self.attention = SelfAttention().self_attention
-        self.linear_query = copy_layer(nn.Linear(self.hidden_size, self.d_size), self.n_heads)
-        self.linear_key = copy_layer(nn.Linear(self.hidden_size, self.d_size), self.n_heads)
-        self.linear_value = copy_layer(nn.Linear(self.hidden_size, self.d_size), self.n_heads)
-        self.att_probas = []
+        # (W_q) n_heads times:
+        self.linear_query = [nn.Linear(self.emb_size, self.att_size) for _ in range(self.n_heads)]
+        # (W_k) n_heads times:
+        self.linear_key = [nn.Linear(self.emb_size, self.att_size) for _ in range(self.n_heads)]
+        # (W_v) n_heads times:
+        self.linear_value = [nn.Linear(self.emb_size, self.att_size) for _ in range(self.n_heads)]
+        # Fields for keeping attended values and attention_probabilities
+        self.att_probas = []    # n_heads х n_sentences x max_len x max_len
         self.scores = []
-        self.output_linear = nn.Linear(n_heads*d_size, hidden_size)
+        # Linear layer to transform concatenated heads
+        self.output_linear = nn.Linear(n_heads*att_size, emb_size)
 
     def forward(self, query, key, value):
+        # for each head:
         for head in range(self.n_heads):
             q = self.linear_query[head](query)
             k = self.linear_key[head](key)
             v = self.linear_value[head](value)
+            # Scaled dot-product attention:
             score, p_att = self.attention(q,k,v)
             self.att_probas.append(p_att)
             self.scores.append(score)
+        # Concatenate resulting matrices concat(z_0, z_1, ... z__n_heads)
         scores = torch.cat(self.scores, -1)
-        logging.debug('Scores shape: {}'.format(scores.size()))
+        # Transform concatenated
         scores = self.output_linear(scores)
-        logging.debug('Scores shape: {}'.format(scores.size()))
+        # Update attention probabilities for every head
         att_probas = self.att_probas
+        # Reset scores and probabilities
         self.scores = []
         self.att_probas = []
         return scores, att_probas
