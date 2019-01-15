@@ -64,11 +64,11 @@ class MultiheadAttention(nn.Module):
         self.att_size = att_size
         self.attention = SelfAttention().self_attention
         # (W_q) n_heads times:
-        self.linear_query = [nn.Linear(self.emb_size, self.att_size) for _ in range(self.n_heads)]
+        self.linear_query = nn.ModuleList([nn.Linear(self.emb_size, self.att_size) for _ in range(self.n_heads)])
         # (W_k) n_heads times:
-        self.linear_key = [nn.Linear(self.emb_size, self.att_size) for _ in range(self.n_heads)]
+        self.linear_key = nn.ModuleList([nn.Linear(self.emb_size, self.att_size) for _ in range(self.n_heads)])
         # (W_v) n_heads times:
-        self.linear_value = [nn.Linear(self.emb_size, self.att_size) for _ in range(self.n_heads)]
+        self.linear_value = nn.ModuleList([nn.Linear(self.emb_size, self.att_size) for _ in range(self.n_heads)])
         # Fields for keeping attended values and attention_probabilities
         self.att_probas = []    # n_heads х n_sentences x max_len x max_len
         self.scores = []
@@ -249,7 +249,7 @@ class SAttendedSimpleNet(SimpleNet):
         super(SAttendedSimpleNet, self).__init__(vocab_size, embed_dim,
                                                  rnn_hidden_size)
         self.l_attention = MultiheadAttention(n_heads, rnn_hidden_size,
-                                              d_size=attention_size)
+                                              att_size=attention_size)
         self.l_probas = None
     def forward(self, input_seq_l, input_seq_r):
         outputs_l = self.encoder_l(input_seq_l)
