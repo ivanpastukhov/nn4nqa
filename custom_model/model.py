@@ -175,7 +175,7 @@ class BaseModel(nn.Module):
         return loss
 
     def fit(self, X_left, X_right, y_train, batch_size, epochs, loss_function, optimizer, device,
-            val_data=None):
+            clip=None, val_data=None):
         """
         Fit the model.
         :param X_left: pytorch.Tensor object, sequences of encoded phrases. Usually questions.
@@ -189,9 +189,9 @@ class BaseModel(nn.Module):
         :param val_data: validation data like (X_val, y_val) is used to obtain vlidation results during training process.
         :return:
         """
-        self._fit(X_left, X_right, y_train, batch_size, epochs, loss_function, optimizer, device, val_data)  # custom logic
+        self._fit(X_left, X_right, y_train, batch_size, epochs, loss_function, optimizer, device, clip, val_data)  # custom logic
 
-    def _fit(self, X_left, X_right, y_train, batch_size, epochs, loss_function, optimizer, device, val_data):
+    def _fit(self, X_left, X_right, y_train, batch_size, epochs, loss_function, optimizer, device, clip,  val_data):
         self.loss_function = loss_function
         self.optimizer = optimizer
         if val_data:
@@ -209,6 +209,8 @@ class BaseModel(nn.Module):
         step = 0
         # Initialize optimizer
         self.optimizer = self.optimizer(self.parameters())
+        if clip:
+            _ = nn.utils.clip_grad_norm(self.parameters(), clip)
         self.to(device)
         print('Training...')
         # self.optimizer.zero_grad()
