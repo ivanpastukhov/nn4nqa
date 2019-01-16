@@ -196,11 +196,13 @@ class BaseModel(nn.Module):
         self.optimizer = optimizer
         self.device = device
         if val_data:
+            # TODO: костыль. Влаидация создаёт новый граф(?). Переносим на cpu
             x_val, y_val = val_data
             x_l_val, x_r_val = x_val
-            x_l_val = x_l_val.to(device)
-            x_r_val = x_r_val.to(device)
-            y_val = y_val.to(device)
+            logging.warning('Validation is processed on CPU to avoid GPU OOM.')
+            x_l_val = x_l_val.to('cpu')
+            x_r_val = x_r_val.to('cpu')
+            y_val = y_val.to('cpu')
             self.validation = True
         else:
             self.validation = False
@@ -237,8 +239,6 @@ class BaseModel(nn.Module):
 
             print('Epoch: {}, loss: {:0.5f}. {:0.2} [s] per epoch'.format(epoch, loss, end_time-start_time))
             if self.validation:
-                del (x_l_batch, x_r_batch, y_train_batch)
-                torch.cuda.empty_cache()
                 val_loss = self.validation_loss(x_l_val, x_r_val, y_val)
                 print('       val_loss: {:0.5f}'.format(val_loss))
         print('Done!')
