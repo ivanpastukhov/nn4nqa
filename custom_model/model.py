@@ -98,7 +98,7 @@ class MultiheadAttention(nn.Module):
         return scores, att_probas
 
 
-class AttentionFlattener(nn.Model):
+class AttentionFlattener(nn.Module):
     def __init__(self):
         self.attention_matrix = None
         pass
