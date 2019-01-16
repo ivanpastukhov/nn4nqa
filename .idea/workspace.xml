@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d8a6d816-c15c-496b-ba80-d91757b05dc3" name="Default" comment="" />
+    <list default="true" id="d8a6d816-c15c-496b-ba80-d91757b05dc3" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/custom_model/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/custom_model/model.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -26,8 +28,8 @@
       <file leaf-file-name="model.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/custom_model/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="243" column="34" lean-forward="true" selection-start-line="243" selection-start-column="34" selection-end-line="243" selection-end-column="34" />
+            <state relative-caret-position="226">
+              <caret line="217" column="25" selection-start-line="217" selection-start-column="25" selection-end-line="217" selection-end-column="25" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
                 <element signature="e#706#1393#0" />
@@ -658,8 +660,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/custom_model/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="243" column="34" lean-forward="true" selection-start-line="243" selection-start-column="34" selection-end-line="243" selection-end-column="34" />
+        <state relative-caret-position="226">
+          <caret line="217" column="25" selection-start-line="217" selection-start-column="25" selection-end-line="217" selection-end-column="25" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
             <element signature="e#706#1393#0" />

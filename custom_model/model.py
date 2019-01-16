@@ -214,7 +214,7 @@ class BaseModel(nn.Module):
         self.to(device)
         print('Training...')
         # self.optimizer.zero_grad()
-        # for epoch in range(epochs):
+        for epoch in range(epochs):
             start_time = time.time()
             lb = 0
             rb = batch_size
