@@ -257,10 +257,10 @@ class BaseModel(nn.Module):
             if self.validation:
                 with torch.no_grad():
                     val_loss = self.validation_loss(x_l_val, x_r_val, y_val)
-                    self.val_losses.append(np.mean(val_loss.item()))
-                    print('Epoch: {}, loss: {:0.5f}. {:0.2} [s] per epoch. Val loss: {:0.5f}'.format(epoch, loss, end_time - start_time, val_loss))
+                    self.val_losses.append(val_loss.item())
+                    print('Epoch: {}, loss: {:0.5f}. {:0.2} [s] per epoch. Val loss: {:0.5f}'.format(epoch, self.losses[-1], end_time - start_time, val_loss))
             else:
-                print('Epoch: {}, loss: {:0.5f}. {:0.2} [s] per epoch'.format(epoch, loss, end_time - start_time))
+                print('Epoch: {}, loss: {:0.5f}. {:0.2} [s] per epoch'.format(epoch, self.losses[-1], end_time - start_time))
 
         print('Done!')
 
