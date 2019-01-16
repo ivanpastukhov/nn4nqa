@@ -233,8 +233,10 @@ class BaseModel(nn.Module):
                 # progress bar
                 sys.stdout.write("")
                 sys.stdout.flush()
+                del(x_l_batch, x_r_batch, y_train_batch)
+                torch.cuda.empty_cache()
             end_time = time.time()
-            torch.cuda.empty_cache()
+
             print('Epoch: {}, loss: {:0.5f}. {:0.2} [s] per epoch'.format(epoch, loss, end_time-start_time))
             if self.validation:
                 val_loss = self.validation_loss(x_l_val, x_r_val, y_val)
