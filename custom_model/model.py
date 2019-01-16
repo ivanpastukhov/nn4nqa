@@ -98,6 +98,16 @@ class MultiheadAttention(nn.Module):
         return scores, att_probas
 
 
+class AttentionFlattener(nn.Model):
+    def __init__(self):
+        self.attention_matrix = None
+        pass
+
+    def forward(self, x):
+        self.attention_matrix = x
+
+
+
 class PositionalEncoding(nn.Module):
     # Нужен для работы self-Attention.
     # Positional Encoding Matrix имеет тот же размер, что и Input Sentence Matrix:
@@ -171,6 +181,9 @@ class BaseModel(nn.Module):
         self.val_losses = []
         self.steps = []
 
+    def forward(self, *input):
+        raise NotImplementedError('Class must be implemented in child class.')
+
     def validation_loss(self, X_l_val, X_r_val, y_val):
         y_pred = self.__call__(X_l_val, X_r_val)
         loss = self.loss_function(y_pred, y_val)
@@ -197,7 +210,6 @@ class BaseModel(nn.Module):
         self.loss_function = loss_function
         self.optimizer = optimizer
         if val_data:
-            # TODO: костыль. Влаидация создаёт новый граф(?). Переносим на cpu
             x_val, y_val = val_data
             x_l_val, x_r_val = x_val
             x_l_val = x_l_val.to(device)
@@ -220,7 +232,7 @@ class BaseModel(nn.Module):
             start_time = time.time()
             lb = 0
             rb = batch_size
-            # self.optimizer.zero_grad()
+            losses = []
             while lb < len_dataset:
                 #TODO: Использовать torch data.DataLoader вместо этого
                 x_l_batch = X_left[lb:rb].to(device)
@@ -228,7 +240,7 @@ class BaseModel(nn.Module):
                 y_train_batch = y_train[lb:rb].to(device)
                 y_pred_batch = self.__call__(x_l_batch, x_r_batch)
                 loss = self.loss_function(y_pred_batch, y_train_batch).to(device)
-                self.losses.append(np.mean(loss.item()))
+                losses.append(loss.item())
                 loss.backward()
                 self.optimizer.step()
                 self.optimizer.zero_grad()
@@ -240,6 +252,7 @@ class BaseModel(nn.Module):
                 # progress bar
                 sys.stdout.write("")
                 sys.stdout.flush()
+            self.losses.append(np.mean(losses))
             end_time = time.time()
             if self.validation:
                 with torch.no_grad():
@@ -277,6 +290,7 @@ class SimpleNet(BaseModel):
         ans = F.softmax(self.answer(fc), dim=1)
         return ans
 
+
 class SAttendedSimpleNet(SimpleNet):
     def __init__(self, vocab_size, embed_dim, rnn_hidden_size,
                  attention_size, n_heads):
@@ -285,6 +299,7 @@ class SAttendedSimpleNet(SimpleNet):
         self.l_attention = MultiheadAttention(n_heads, rnn_hidden_size,
                                               att_size=attention_size)
         self.l_probas = None
+
     def forward(self, input_seq_l, input_seq_r):
         outputs_l = self.encoder_l(input_seq_l)
         outputs_l, self.l_probas = self.l_attention(outputs_l, outputs_l, outputs_l)
@@ -295,5 +310,3 @@ class SAttendedSimpleNet(SimpleNet):
         fc = self.hidden(concatenated)
         ans = F.softmax(self.answer(fc), dim=1)
         return ans
-
-
