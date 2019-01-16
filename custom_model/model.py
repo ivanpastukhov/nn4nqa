@@ -234,6 +234,7 @@ class BaseModel(nn.Module):
                 sys.stdout.write("")
                 sys.stdout.flush()
             end_time = time.time()
+            torch.cuda.empty_cache()
             print('Epoch: {}, loss: {:0.5f}. {:0.2} [s] per epoch'.format(epoch, loss, end_time-start_time))
             if self.validation:
                 val_loss = self.validation_loss(x_l_val, x_r_val, y_val)
