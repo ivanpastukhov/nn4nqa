@@ -199,10 +199,12 @@ class BaseModel(nn.Module):
             # TODO: костыль. Влаидация создаёт новый граф(?). Переносим на cpu
             x_val, y_val = val_data
             x_l_val, x_r_val = x_val
-            logging.warning('Validation is processed on CPU to avoid GPU OOM.')
-            x_l_val = x_l_val.to('cpu')
-            x_r_val = x_r_val.to('cpu')
-            y_val = y_val.to('cpu')
+            x_l_val = x_l_val.to(device)
+            x_r_val = x_r_val.to(device)
+            y_val = y_val.to(device)
+            x_l_val.volatile=True
+            x_r_val.volatile = True
+            y_val.volatile = True
             self.validation = True
         else:
             self.validation = False
