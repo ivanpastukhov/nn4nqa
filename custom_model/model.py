@@ -209,7 +209,7 @@ class BaseModel(nn.Module):
         step = 0
         # Initialize optimizer
         self.optimizer = self.optimizer(self.parameters())
-        self.to(self.device)
+        self.to(device)
         print('Training...')
         for epoch in range(epochs):
             start_time = time.time()
