@@ -3,7 +3,7 @@ import torch
 import numpy as np
 import os
 import pickle
-from custom_model.model import SimpleNet, SAttendedSimpleNet
+from custom_model.model import SimpleNet, SAttendedSimpleNet, SAttendedNet
 
 def run():
     USE_CUDA = torch.cuda.is_available()
@@ -18,13 +18,13 @@ def run():
     df_test = pd.read_pickle('./data/processed/wikiqa_df_test.pickle')
     voc = read_pickle('./data/processed/vocabulary.pickle')
 
-    df_train = df_train.iloc[:100]
+    df_train = df_train.iloc[:12]
 
     print('Train shape: {} \n\
     Test shape: {}'.format(df_train.shape, df_test.shape))
 
     net_simple = SimpleNet(voc['voc_len'], 64, 64)
-    net_att = SAttendedSimpleNet(voc['voc_len'], 128, 64, 32, 3)
+    net_att = SAttendedNet(voc['voc_len'], 128, 64, 32, 1, 22, 287)
 
     Xq = np.array(df_train.Question_encoded.values.tolist())
     Xa = np.array(df_train.Sentence_encoded.values.tolist())
@@ -35,7 +35,7 @@ def run():
     t = torch.from_numpy(t)
 
     batch_size = 50
-    epochs = 10
+    epochs = 5
 
     optimizer = torch.optim.Adam
     loss_func = torch.nn.CrossEntropyLoss(weight=torch.tensor([0.05, 1.]).to(device))

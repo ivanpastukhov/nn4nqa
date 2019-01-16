@@ -3,7 +3,7 @@ import torch
 from torch.nn import functional as F
 from torch.autograd import Variable
 import logging
-logging.basicConfig(level=logging.WARNING)
+logging.basicConfig(level=logging.DEBUG)
 import sys
 import time
 import math
@@ -99,13 +99,18 @@ class MultiheadAttention(nn.Module):
 
 
 class AttentionFlattener(nn.Module):
-    def __init__(self):
+    def __init__(self, seq_len):
+        super(AttentionFlattener, self).__init__()
         self.attention_matrix = None
+        self.linear = nn.Linear(seq_len, 1)
+        self.softmax = nn.Softmax(0)
         pass
 
     def forward(self, x):
         self.attention_matrix = x
-
+        scores = self.linear(self.attention_matrix)
+        scores = self.softmax(scores)
+        return scores
 
 
 class PositionalEncoding(nn.Module):
@@ -308,6 +313,41 @@ class SAttendedSimpleNet(SimpleNet):
         outputs_r = self.encoder_r(input_seq_r)
         outputs_r = torch.mean(outputs_r, 1)
         concatenated = torch.cat((outputs_l, outputs_r), 1)
+        fc = self.hidden(concatenated)
+        ans = F.softmax(self.answer(fc), dim=1)
+        return ans
+
+
+class SAttendedNet(SimpleNet):
+    def __init__(self, vocab_size, embed_dim, rnn_hidden_size,
+                 attention_size, n_heads, l_seq_len, r_seq_len):
+        super(SAttendedNet, self).__init__(vocab_size, embed_dim,
+                                                 rnn_hidden_size)
+        self.l_attention = MultiheadAttention(n_heads, rnn_hidden_size,
+                                              att_size=attention_size)
+        self.r_attention = MultiheadAttention(n_heads, rnn_hidden_size,
+                                              att_size=attention_size)
+        self.l_flatten = AttentionFlattener(l_seq_len)
+        self.r_flatten = AttentionFlattener(r_seq_len)
+        self.l_probas = None
+
+    def forward(self, input_seq_l, input_seq_r):
+        outputs_l = self.encoder_l(input_seq_l)
+        _, self.l_probas = self.l_attention(outputs_l, outputs_l, outputs_l)
+        self.l_probas = self.l_probas[0]
+        scores_l = self.l_flatten(self.l_probas)
+        outputs_l = scores_l * outputs_l
+        left = torch.sum(outputs_l, dim=1)
+
+        outputs_r = self.encoder_r(input_seq_r)
+        _, self.r_probas = self.r_attention(outputs_r, outputs_r, outputs_r)
+        self.r_probas = self.r_probas[0]
+        scores_r = self.r_flatten(self.r_probas)
+        outputs_r = scores_r * outputs_r
+        right = torch.sum(outputs_r, dim=1)
+
+        concatenated = torch.cat((left, right), 1)
+        logging.debug('Concatenated: {}'.format(concatenated.size()))
         fc = self.hidden(concatenated)
         ans = F.softmax(self.answer(fc), dim=1)
         return ans

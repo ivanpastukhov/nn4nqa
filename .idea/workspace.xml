@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d8a6d816-c15c-496b-ba80-d91757b05dc3" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/custom_model/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/custom_model/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -16,8 +17,8 @@
       <file leaf-file-name="att_toy_example.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/att_toy_example.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="173">
-              <caret line="17" column="21" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
+            <state relative-caret-position="180">
+              <caret line="12" column="32" lean-forward="true" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -25,30 +26,30 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="model.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="model.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/custom_model/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="417">
-              <caret line="255" column="42" lean-forward="true" selection-start-line="255" selection-start-column="42" selection-end-line="255" selection-end-column="42" />
+            <state relative-caret-position="-630">
+              <caret line="110" selection-start-line="110" selection-end-line="110" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
                 <element signature="e#706#1393#0" />
                 <element signature="e#1423#2056#0" />
-                <element signature="e#2100#3551#0" />
                 <element signature="e#3595#4965#0" />
                 <element signature="e#4998#6087#0" />
+                <element signature="e#6677#10607#0" />
+                <element signature="e#6675#6702#0" />
                 <element signature="e#8405#9390#0" />
-                <element signature="e#9433#10328#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="run.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="run.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/run.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="39" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
+            <state relative-caret-position="240">
+              <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -98,9 +99,9 @@
         <option value="$PROJECT_DIR$/Untitled.ipynb" />
         <option value="$PROJECT_DIR$/custom_model/train.py" />
         <option value="$PROJECT_DIR$/model/att_toy_example.py" />
-        <option value="$PROJECT_DIR$/run.py" />
         <option value="$PROJECT_DIR$/att_toy_example.py" />
         <option value="$PROJECT_DIR$/custom_model/model.py" />
+        <option value="$PROJECT_DIR$/run.py" />
       </list>
     </option>
   </component>
@@ -166,7 +167,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.att_toy_example">
+  <component name="RunManager" selected="Python.run">
     <configuration name="att_toy_example" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="nn4nqa" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -266,8 +267,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.att_toy_example" />
         <item itemvalue="Python.run" />
+        <item itemvalue="Python.att_toy_example" />
         <item itemvalue="Python.playground" />
         <item itemvalue="Python.train" />
         <item itemvalue="Python.model" />
@@ -296,11 +297,11 @@
       <window_info anchor="bottom" id="Docker" order="7" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" x="0" y="0" width="310" height="700" id="Documentation" order="3" side_tool="true" weight="0.2360515" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32484847" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32484847" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.24484849" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.22424242" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.22424242" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4521212" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -327,7 +328,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="42" />
+      <option name="time" value="43" />
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
@@ -368,11 +369,11 @@
             <element signature="e#0#20#0" expanded="true" />
             <element signature="e#706#1393#0" />
             <element signature="e#1423#2056#0" />
-            <element signature="e#2100#3551#0" />
             <element signature="e#3595#4965#0" />
             <element signature="e#4998#6087#0" />
+            <element signature="e#6677#10607#0" />
+            <element signature="e#6675#6702#0" />
             <element signature="e#8405#9390#0" />
-            <element signature="e#9433#10328#0" />
           </folding>
         </state>
       </provider>
@@ -605,23 +606,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///anaconda3/lib/python3.6/site-packages/torch/nn/modules/module.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="490" selection-start-line="490" selection-end-line="490" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///anaconda3/lib/python3.6/site-packages/torch/nn/modules/linear.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="54" selection-start-line="54" selection-end-line="54" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/model/playground.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
@@ -642,20 +626,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/run.py">
+    <entry file="file:///anaconda3/lib/python3.6/site-packages/torch/nn/modules/linear.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="39" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
+        <state relative-caret-position="363">
+          <caret line="54" selection-start-line="54" selection-end-line="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///anaconda3/lib/python3.6/site-packages/torch/nn/modules/module.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="490" selection-start-line="490" selection-end-line="490" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#0#35#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/att_toy_example.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="17" column="21" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
+        <state relative-caret-position="180">
+          <caret line="12" column="32" lean-forward="true" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -664,17 +655,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/custom_model/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="417">
-          <caret line="255" column="42" lean-forward="true" selection-start-line="255" selection-start-column="42" selection-end-line="255" selection-end-column="42" />
+        <state relative-caret-position="-630">
+          <caret line="110" selection-start-line="110" selection-end-line="110" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
             <element signature="e#706#1393#0" />
             <element signature="e#1423#2056#0" />
-            <element signature="e#2100#3551#0" />
             <element signature="e#3595#4965#0" />
             <element signature="e#4998#6087#0" />
+            <element signature="e#6677#10607#0" />
+            <element signature="e#6675#6702#0" />
             <element signature="e#8405#9390#0" />
-            <element signature="e#9433#10328#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>
