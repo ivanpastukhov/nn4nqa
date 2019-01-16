@@ -240,7 +240,7 @@ class BaseModel(nn.Module):
             if self.validation:
                 with torch.no_grad():
                     val_loss = self.validation_loss(x_l_val, x_r_val, y_val)
-                    print('       val_loss: {:0.5f}'.format(val_loss))
+                    print('\t\t\t   val_loss: {:0.5f}'.format(val_loss))
         print('Done!')
 
 
