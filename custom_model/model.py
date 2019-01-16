@@ -169,7 +169,13 @@ class BaseModel(nn.Module):
         self.losses = []
         self.steps = []
 
-    def fit(self, X_left, X_right, y_train, batch_size, epochs, loss_function, optimizer, device):
+    def validation_loss(self, X_val, y_val):
+        y_pred = self.__call__(X_val)
+        loss = self.loss_function(y_pred, y_val)
+        return loss
+
+    def fit(self, X_left, X_right, y_train, batch_size, epochs, loss_function, optimizer, device,
+            val_data=None):
         """
         Fit the model.
         :param X_left: pytorch.Tensor object, sequences of encoded phrases. Usually questions.
@@ -180,31 +186,36 @@ class BaseModel(nn.Module):
         :param loss_function: function, scalar must be returned.
         :param optimizer: torch optimizer object
         :param device: str, 'cuda' or 'cpu'
+        :param val_data: validation data like (X_val, y_val) is used to obtain vlidation results during training process.
         :return:
         """
-        self._fit(X_left, X_right, y_train, batch_size, epochs, loss_function, optimizer, device)  # custom logic
+        self._fit(X_left, X_right, y_train, batch_size, epochs, loss_function, optimizer, device, val_data)  # custom logic
 
-    def _fit(self, X_left, X_right, y_train, batch_size, epochs, loss_function, optimizer, device):
+    def _fit(self, X_left, X_right, y_train, batch_size, epochs, loss_function, optimizer, device, val_data):
+        self.loss_function = loss_function
+        self.optimizer = optimizer
+        self.device = device
         assert len(X_left) == len(y_train) == len(X_right)
         len_dataset = len(X_left)
         step = 0
-        optimizer = optimizer(self.parameters())
-        self.to(device)
+        # Initialize optimizer
+        self.optimizer = self.optimizer(self.parameters())
+        self.to(self.device)
         print('Training...')
         for epoch in range(epochs):
             start_time = time.time()
             lb = 0
             rb = batch_size
             while lb < len_dataset:
-                x_l_batch = X_left[lb:rb].to(device)
-                x_r_batch = X_right[lb:rb].to(device)
-                y_train_batch = y_train[lb:rb].to(device)
+                x_l_batch = X_left[lb:rb].to(self.device)
+                x_r_batch = X_right[lb:rb].to(self.device)
+                y_train_batch = y_train[lb:rb].to(self.device)
                 y_pred_batch = self.__call__(x_l_batch, x_r_batch)
-                loss = loss_function(y_pred_batch, y_train_batch).to(device)
+                loss = self.loss_function(y_pred_batch, y_train_batch).to(self.device)
                 self.losses.append(loss.item())
-                optimizer.zero_grad()
+                self.optimizer.zero_grad()
                 loss.backward()
-                optimizer.step()
+                self.optimizer.step()
                 # update counters
                 rb += batch_size
                 lb += batch_size
@@ -215,6 +226,9 @@ class BaseModel(nn.Module):
                 sys.stdout.flush()
             end_time = time.time()
             print('Epoch: {}, loss: {:0.5f}. {:0.2} [s] per epoch'.format(epoch, loss, end_time-start_time))
+            if val_data:
+                val_loss = self.validation_loss(val_data)
+                print('       val_loss: {:0.5f}'.format(val_loss))
         print('Done!')
 
 
