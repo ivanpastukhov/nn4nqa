@@ -232,16 +232,16 @@ class BaseModel(nn.Module):
             start_time = time.time()
             lb = 0
             rb = batch_size
-            losses = []
+            epoch_losses = []
             while lb < len_dataset:
                 #TODO: Использовать torch data.DataLoader вместо этого
                 x_l_batch = X_left[lb:rb].to(device)
                 x_r_batch = X_right[lb:rb].to(device)
                 y_train_batch = y_train[lb:rb].to(device)
                 y_pred_batch = self.__call__(x_l_batch, x_r_batch)
-                loss = self.loss_function(y_pred_batch, y_train_batch).to(device)
-                losses.append(loss.item())
-                loss.backward()
+                batch_loss = self.loss_function(y_pred_batch, y_train_batch).to(device)
+                epoch_losses.append(batch_loss.item())
+                batch_loss.backward()
                 self.optimizer.step()
                 self.optimizer.zero_grad()
                 # update counters
@@ -252,15 +252,16 @@ class BaseModel(nn.Module):
                 # progress bar
                 sys.stdout.write("")
                 sys.stdout.flush()
-            self.losses.append(np.mean(losses))
+            epoch_loss = np.mean(epoch_losses)
+            self.losses.append(epoch_loss)
             end_time = time.time()
             if self.validation:
                 with torch.no_grad():
                     val_loss = self.validation_loss(x_l_val, x_r_val, y_val)
                     self.val_losses.append(val_loss.item())
-                    print('Epoch: {}, loss: {:0.5f}. {:0.2} [s] per epoch. Val loss: {:0.5f}'.format(epoch, self.losses[-1], end_time - start_time, val_loss))
+                    print('Epoch: {}, loss: {:0.5f}. {:0.2} [s] per epoch. Val loss: {:0.5f}'.format(epoch, epoch_loss, end_time - start_time, val_loss))
             else:
-                print('Epoch: {}, loss: {:0.5f}. {:0.2} [s] per epoch'.format(epoch, self.losses[-1], end_time - start_time))
+                print('Epoch: {}, loss: {:0.5f}. {:0.2} [s] per epoch'.format(epoch, epoch_loss, end_time - start_time))
 
         print('Done!')
 
