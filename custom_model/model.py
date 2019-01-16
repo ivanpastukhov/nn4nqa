@@ -211,8 +211,8 @@ class BaseModel(nn.Module):
         self.optimizer = self.optimizer(self.parameters())
         self.to(device)
         print('Training...')
-        self.optimizer.zero_grad()
-        for epoch in range(epochs):
+        # self.optimizer.zero_grad()
+        # for epoch in range(epochs):
             start_time = time.time()
             lb = 0
             rb = batch_size
@@ -225,7 +225,7 @@ class BaseModel(nn.Module):
                 y_pred_batch = self.__call__(x_l_batch, x_r_batch)
                 loss = self.loss_function(y_pred_batch, y_train_batch).to(device)
                 self.losses.append(loss.item())
-                # self.optimizer.zero_grad()
+                self.optimizer.zero_grad()
                 loss.backward()
                 self.optimizer.step()
                 # update counters
