@@ -3,7 +3,7 @@ import torch
 from torch.nn import functional as F
 from torch.autograd import Variable
 import logging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.WARNING)
 import sys
 import time
 import math
