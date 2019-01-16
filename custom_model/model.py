@@ -215,7 +215,7 @@ class BaseModel(nn.Module):
             start_time = time.time()
             lb = 0
             rb = batch_size
-            self.optimizer.zero_grad()
+            # self.optimizer.zero_grad()
             while lb < len_dataset:
                 x_l_batch = X_left[lb:rb].to(device)
                 x_r_batch = X_right[lb:rb].to(device)
@@ -223,7 +223,7 @@ class BaseModel(nn.Module):
                 y_pred_batch = self.__call__(x_l_batch, x_r_batch)
                 loss = self.loss_function(y_pred_batch, y_train_batch).to(device)
                 self.losses.append(loss.item())
-                # self.optimizer.zero_grad()
+                self.optimizer.zero_grad()
                 loss.backward()
                 self.optimizer.step()
                 # update counters
