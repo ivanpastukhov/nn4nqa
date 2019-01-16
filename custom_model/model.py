@@ -194,7 +194,6 @@ class BaseModel(nn.Module):
     def _fit(self, X_left, X_right, y_train, batch_size, epochs, loss_function, optimizer, device, val_data):
         self.loss_function = loss_function
         self.optimizer = optimizer
-        self.device = device
         if val_data:
             # TODO: костыль. Влаидация создаёт новый граф(?). Переносим на cpu
             x_val, y_val = val_data
@@ -218,11 +217,11 @@ class BaseModel(nn.Module):
             rb = batch_size
             self.optimizer.zero_grad()
             while lb < len_dataset:
-                x_l_batch = X_left[lb:rb].to(self.device)
-                x_r_batch = X_right[lb:rb].to(self.device)
-                y_train_batch = y_train[lb:rb].to(self.device)
+                x_l_batch = X_left[lb:rb].to(device)
+                x_r_batch = X_right[lb:rb].to(device)
+                y_train_batch = y_train[lb:rb].to(device)
                 y_pred_batch = self.__call__(x_l_batch, x_r_batch)
-                loss = self.loss_function(y_pred_batch, y_train_batch).to(self.device)
+                loss = self.loss_function(y_pred_batch, y_train_batch).to(device)
                 self.losses.append(loss.item())
                 loss.backward()
                 self.optimizer.step()
