@@ -227,9 +227,9 @@ class BaseModel(nn.Module):
                 y_pred_batch = self.__call__(x_l_batch, x_r_batch)
                 loss = self.loss_function(y_pred_batch, y_train_batch).to(device)
                 self.losses.append(loss.item())
-                self.optimizer.zero_grad()
                 loss.backward()
                 self.optimizer.step()
+                self.optimizer.zero_grad()
                 # update counters
                 rb += batch_size
                 lb += batch_size
