@@ -211,19 +211,21 @@ class BaseModel(nn.Module):
         self.optimizer = self.optimizer(self.parameters())
         self.to(device)
         print('Training...')
+        self.optimizer.zero_grad()
         for epoch in range(epochs):
             start_time = time.time()
             lb = 0
             rb = batch_size
             # self.optimizer.zero_grad()
             while lb < len_dataset:
+                #TODO: Использовать torch data.DataLoader вместо этого
                 x_l_batch = X_left[lb:rb].to(device)
                 x_r_batch = X_right[lb:rb].to(device)
                 y_train_batch = y_train[lb:rb].to(device)
                 y_pred_batch = self.__call__(x_l_batch, x_r_batch)
                 loss = self.loss_function(y_pred_batch, y_train_batch).to(device)
                 self.losses.append(loss.item())
-                self.optimizer.zero_grad()
+                # self.optimizer.zero_grad()
                 loss.backward()
                 self.optimizer.step()
                 # update counters
