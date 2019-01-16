@@ -7,6 +7,7 @@ logging.basicConfig(level=logging.WARNING)
 import sys
 import time
 import math
+import numpy as np
 
 # Источники: https://arxiv.org/pdf/1706.03762.pdf - Attention Is All You Need, §3.5
 #            "How to code The Transformer in Pytorch" - Samuel Lynn-Evans
@@ -167,6 +168,7 @@ class BaseModel(nn.Module):
     def __init__(self):
         super().__init__()
         self.losses = []
+        self.val_losses = []
         self.steps = []
 
     def validation_loss(self, X_l_val, X_r_val, y_val):
@@ -226,7 +228,7 @@ class BaseModel(nn.Module):
                 y_train_batch = y_train[lb:rb].to(device)
                 y_pred_batch = self.__call__(x_l_batch, x_r_batch)
                 loss = self.loss_function(y_pred_batch, y_train_batch).to(device)
-                self.losses.append(loss.item())
+                self.losses.append(np.mean(loss.item()))
                 loss.backward()
                 self.optimizer.step()
                 self.optimizer.zero_grad()
@@ -242,6 +244,7 @@ class BaseModel(nn.Module):
             if self.validation:
                 with torch.no_grad():
                     val_loss = self.validation_loss(x_l_val, x_r_val, y_val)
+                    self.val_losses.append(np.mean(val_loss.item()))
                     print('Epoch: {}, loss: {:0.5f}. {:0.2} [s] per epoch. Val loss: {:0.5f}'.format(epoch, loss, end_time - start_time, val_loss))
             else:
                 print('Epoch: {}, loss: {:0.5f}. {:0.2} [s] per epoch'.format(epoch, loss, end_time - start_time))
