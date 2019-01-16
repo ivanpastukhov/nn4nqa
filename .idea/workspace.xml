@@ -16,7 +16,7 @@
       <file leaf-file-name="att_toy_example.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/att_toy_example.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
+            <state relative-caret-position="173">
               <caret line="17" column="21" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
@@ -28,8 +28,8 @@
       <file leaf-file-name="model.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/custom_model/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="371">
-              <caret line="221" column="25" lean-forward="true" selection-start-line="221" selection-start-column="25" selection-end-line="221" selection-end-column="25" />
+            <state relative-caret-position="405">
+              <caret line="235" column="47" selection-start-line="235" selection-start-column="47" selection-end-line="235" selection-end-column="47" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
                 <element signature="e#706#1393#0" />
@@ -44,7 +44,7 @@
       <file leaf-file-name="run.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/run.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
+            <state relative-caret-position="255">
               <caret line="17" column="39" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
@@ -288,7 +288,7 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2639485" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2639485" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
@@ -297,7 +297,7 @@
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.24484849" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.22424242" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.22424242" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4521212" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -626,16 +626,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/att_toy_example.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="17" column="21" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/model/model.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2047">
@@ -646,9 +636,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/att_toy_example.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="17" column="21" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/run.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
+        <state relative-caret-position="255">
           <caret line="17" column="39" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
@@ -658,8 +658,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/custom_model/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="371">
-          <caret line="221" column="25" lean-forward="true" selection-start-line="221" selection-start-column="25" selection-end-line="221" selection-end-column="25" />
+        <state relative-caret-position="405">
+          <caret line="235" column="47" selection-start-line="235" selection-start-column="47" selection-end-line="235" selection-end-column="47" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
             <element signature="e#706#1393#0" />

@@ -169,8 +169,8 @@ class BaseModel(nn.Module):
         self.losses = []
         self.steps = []
 
-    def validation_loss(self, X_val, y_val):
-        y_pred = self.__call__(X_val)
+    def validation_loss(self, X_l_val, X_r_val, y_val):
+        y_pred = self.__call__(X_l_val, X_r_val)
         loss = self.loss_function(y_pred, y_val)
         return loss
 
@@ -227,7 +227,12 @@ class BaseModel(nn.Module):
             end_time = time.time()
             print('Epoch: {}, loss: {:0.5f}. {:0.2} [s] per epoch'.format(epoch, loss, end_time-start_time))
             if val_data:
-                val_loss = self.validation_loss(val_data)
+                x_val, y_val = val_data
+                x_l_val, x_r_val = x_val
+                x_l_val.to(device)
+                x_r_val.to(device)
+                y_val.to(device)
+                val_loss = self.validation_loss(x_l_val, x_r_val, y_val)
                 print('       val_loss: {:0.5f}'.format(val_loss))
         print('Done!')
 
