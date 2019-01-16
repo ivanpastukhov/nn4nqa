@@ -216,6 +216,7 @@ class BaseModel(nn.Module):
             start_time = time.time()
             lb = 0
             rb = batch_size
+            optimizer.zero_grad()
             while lb < len_dataset:
                 x_l_batch = X_left[lb:rb].to(self.device)
                 x_r_batch = X_right[lb:rb].to(self.device)
