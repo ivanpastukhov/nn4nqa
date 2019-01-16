@@ -229,9 +229,9 @@ class BaseModel(nn.Module):
             if val_data:
                 x_val, y_val = val_data
                 x_l_val, x_r_val = x_val
-                x_l_val.to(device)
-                x_r_val.to(device)
-                y_val.to(device)
+                x_l_val = x_l_val.to(device)
+                x_r_val = x_r_val.to(device)
+                y_val = y_val.to(device)
                 val_loss = self.validation_loss(x_l_val, x_r_val, y_val)
                 print('       val_loss: {:0.5f}'.format(val_loss))
         print('Done!')
