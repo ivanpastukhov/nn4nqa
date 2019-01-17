@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d8a6d816-c15c-496b-ba80-d91757b05dc3" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/custom_model/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/custom_model/model.py" afterDir="false" />
-    </list>
+    <list default="true" id="d8a6d816-c15c-496b-ba80-d91757b05dc3" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -28,8 +26,8 @@
       <file leaf-file-name="model.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/custom_model/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="492">
-              <caret line="303" lean-forward="true" selection-start-line="303" selection-end-line="303" />
+            <state relative-caret-position="777">
+              <caret line="286" column="27" selection-start-line="286" selection-start-column="27" selection-end-line="286" selection-end-column="27" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
                 <element signature="e#617#1304#0" />
@@ -42,6 +40,7 @@
                 <element signature="e#7094#7164#0" />
                 <element signature="e#7230#7339#0" />
                 <element signature="e#7486#8303#0" />
+                <element signature="e#10873#11942#0" />
                 <element signature="e#11986#13004#0" />
                 <element signature="e#13042#14898#0" />
                 <element signature="e#15847#17854#0" />
@@ -313,7 +312,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32969698" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
@@ -390,6 +388,7 @@
             <element signature="e#7094#7164#0" />
             <element signature="e#7230#7339#0" />
             <element signature="e#7486#8303#0" />
+            <element signature="e#10873#11942#0" />
             <element signature="e#11986#13004#0" />
             <element signature="e#13042#14898#0" />
             <element signature="e#15847#17854#0" />
@@ -687,8 +686,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/custom_model/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="492">
-          <caret line="303" lean-forward="true" selection-start-line="303" selection-end-line="303" />
+        <state relative-caret-position="777">
+          <caret line="286" column="27" selection-start-line="286" selection-start-column="27" selection-end-line="286" selection-end-column="27" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
             <element signature="e#617#1304#0" />
@@ -701,6 +700,7 @@
             <element signature="e#7094#7164#0" />
             <element signature="e#7230#7339#0" />
             <element signature="e#7486#8303#0" />
+            <element signature="e#10873#11942#0" />
             <element signature="e#11986#13004#0" />
             <element signature="e#13042#14898#0" />
             <element signature="e#15847#17854#0" />
