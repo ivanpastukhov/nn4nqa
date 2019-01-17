@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d8a6d816-c15c-496b-ba80-d91757b05dc3" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/custom_model/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/custom_model/model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -29,8 +28,8 @@
       <file leaf-file-name="model.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/custom_model/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="41" selection-start-line="5" selection-start-column="41" selection-end-line="5" selection-end-column="41" />
+            <state relative-caret-position="492">
+              <caret line="303" lean-forward="true" selection-start-line="303" selection-end-line="303" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
                 <element signature="e#617#1304#0" />
@@ -320,8 +319,8 @@
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.24484849" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32484847" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.22424242" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32484847" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.22424242" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2635659" />
       <window_info anchor="bottom" id="Docker" order="7" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.2169697" />
@@ -688,8 +687,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/custom_model/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="41" selection-start-line="5" selection-start-column="41" selection-end-line="5" selection-end-column="41" />
+        <state relative-caret-position="492">
+          <caret line="303" lean-forward="true" selection-start-line="303" selection-end-line="303" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
             <element signature="e#617#1304#0" />

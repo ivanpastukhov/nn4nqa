@@ -301,7 +301,6 @@ class SimpleNet(BaseModel):
                                  emb_weights=emb_weights)
         self.hidden = nn.Linear(hidden_size*2, 64)
         self.answer = nn.Linear(64, 2)
-        self.relu = F.relu()
 
     def forward(self, input_seq_l, input_seq_r):
         outputs_l = self.encoder_l(input_seq_l)
