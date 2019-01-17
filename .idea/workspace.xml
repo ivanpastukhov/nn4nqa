@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d8a6d816-c15c-496b-ba80-d91757b05dc3" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/custom_model/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/custom_model/model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -30,8 +28,8 @@
       <file leaf-file-name="model.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/custom_model/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
-              <caret line="260" column="53" lean-forward="true" selection-start-line="260" selection-start-column="53" selection-end-line="260" selection-end-column="53" />
+            <state relative-caret-position="75">
+              <caret line="5" column="41" selection-start-line="5" selection-start-column="41" selection-end-line="5" selection-end-column="41" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
                 <element signature="e#617#1304#0" />
@@ -41,7 +39,6 @@
                 <element signature="e#6446#6497#0" />
                 <element signature="e#6526#6578#0" />
                 <element signature="e#7094#7164#0" />
-                <element signature="e#7230#7339#0" />
                 <element signature="e#11986#13004#0" />
                 <element signature="e#13042#14898#0" />
                 <element signature="e#15847#17854#0" />
@@ -54,8 +51,8 @@
       <file leaf-file-name="run.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/run.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="436">
-              <caret line="59" column="70" selection-start-line="59" selection-start-column="70" selection-end-line="59" selection-end-column="70" />
+            <state relative-caret-position="896">
+              <caret line="60" column="25" selection-start-line="60" selection-start-column="25" selection-end-line="60" selection-end-column="25" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -316,8 +313,8 @@
       <window_info anchor="right" x="0" y="0" width="310" height="700" id="Documentation" order="3" side_tool="true" visible="true" weight="0.2360515" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.24484849" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32484847" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.22424242" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32484847" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.22424242" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26752505" />
       <window_info anchor="bottom" id="Docker" order="7" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.2169697" />
@@ -344,7 +341,7 @@
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/custom_model/model.py</url>
           <line>262</line>
-          <option name="timeStamp" value="47" />
+          <option name="timeStamp" value="54" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -354,16 +351,13 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="48" />
+      <option name="time" value="55" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
-        <watch expression="y_pred_batch.size()" language="Python" />
+        <watch expression="y_pred.size()" language="Python" />
+        <watch expression="y_val.size()" language="Python" />
         <watch expression="y_train_batch.size()" language="Python" />
-        <watch expression="X_left.size()" language="Python" />
-        <watch expression="x_l_batch.size()" language="Python" />
-        <watch expression="y_train.size()" language="Python" />
-        <watch expression="a.size()" language="Python" />
         <watch expression="b.size()&#10;" language="Python" />
       </configuration>
     </watches-manager>
@@ -400,6 +394,21 @@
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
+        <expression-string>y_train_batch.size()</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>y_val.size()</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>y_pred.size()</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
         <expression-string>y_train.size()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
@@ -415,11 +424,6 @@
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>y_train_batch.size()</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
         <expression-string>y_pred_batch.size()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
@@ -429,36 +433,9 @@
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
-      <expression>
-        <expression-string>outputs_l.size()</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/custom_model/model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="10" column="36" lean-forward="true" selection-start-line="10" selection-start-column="36" selection-end-line="10" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-            <element signature="e#617#1304#0" />
-            <element signature="e#2011#3931#0" />
-            <element signature="e#3975#4358#0" />
-            <element signature="e#4402#5772#0" />
-            <element signature="e#6446#6497#0" />
-            <element signature="e#6526#6578#0" />
-            <element signature="e#7094#7164#0" />
-            <element signature="e#7230#7339#0" />
-            <element signature="e#11986#13004#0" />
-            <element signature="e#13042#14898#0" />
-            <element signature="e#15847#17854#0" />
-            <element signature="e#17101#17872#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/run.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
@@ -699,16 +676,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/att_toy_example.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="14" column="22" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///anaconda3/lib/python3.6/site-packages/torch/nn/modules/linear.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="363">
@@ -736,10 +703,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/att_toy_example.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="14" column="22" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///anaconda3/lib/python3.6/site-packages/torch/nn/modules/loss.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="758" selection-start-line="758" selection-end-line="758" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/run.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="436">
-          <caret line="59" column="70" selection-start-line="59" selection-start-column="70" selection-end-line="59" selection-end-column="70" />
+        <state relative-caret-position="896">
+          <caret line="60" column="25" selection-start-line="60" selection-start-column="25" selection-end-line="60" selection-end-column="25" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
@@ -748,8 +732,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/custom_model/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="260" column="53" lean-forward="true" selection-start-line="260" selection-start-column="53" selection-end-line="260" selection-end-column="53" />
+        <state relative-caret-position="75">
+          <caret line="5" column="41" selection-start-line="5" selection-start-column="41" selection-end-line="5" selection-end-column="41" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
             <element signature="e#617#1304#0" />
@@ -759,7 +743,6 @@
             <element signature="e#6446#6497#0" />
             <element signature="e#6526#6578#0" />
             <element signature="e#7094#7164#0" />
-            <element signature="e#7230#7339#0" />
             <element signature="e#11986#13004#0" />
             <element signature="e#13042#14898#0" />
             <element signature="e#15847#17854#0" />
