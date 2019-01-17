@@ -398,6 +398,7 @@ class CrossAttentionNet(SimpleNet):
         self.l_scores = None
         self.r_scores = None
         self.similarity = nn.CosineSimilarity()
+        self.final_layer = nn.Linear(1,2)
 
 
     def forward(self, input_seq_l, input_seq_r):
@@ -417,4 +418,7 @@ class CrossAttentionNet(SimpleNet):
         right = torch.sum(outputs_r, dim=1)
         right = self.l_linear(right)
         ans = self.similarity(left, right)
+
+        ans = self.final_layer(ans)
+        ans = F.softmax(ans)
         return ans
