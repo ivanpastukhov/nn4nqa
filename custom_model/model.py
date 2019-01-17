@@ -160,7 +160,8 @@ class Encoder(nn.Module):
                                       embedding_dim=self.embed_dim, padding_idx=0)
         # TODO: добавить другие RNN
         self.rnn = nn.LSTM(input_size=self.embed_dim,
-                               hidden_size=self.hidden_size)
+                               hidden_size=self.hidden_size,
+                           batch_first=True)
 
         if bidirectional:
             # TODO: ...
