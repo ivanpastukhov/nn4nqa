@@ -160,7 +160,8 @@ class Encoder(nn.Module):
                                       embedding_dim=self.embed_dim, padding_idx=0)
         # TODO: добавить другие RNN
         self.rnn = nn.LSTM(input_size=self.embed_dim,
-                               hidden_size=self.hidden_size,
+                           hidden_size=self.hidden_size,
+                           num_layers=1,
                            batch_first=True)
 
         if bidirectional:
@@ -186,6 +187,7 @@ class Encoder(nn.Module):
         # TODO: torch.nn.utils.rnn.pack_padded_sequence
         embedded = self.embedding(input_seq)
         outputs, _ = self.rnn(embedded, hidden)
+        logging.debug('Outputs size: {}'.format(outputs.size()))
         return outputs
 
 
@@ -299,14 +301,15 @@ class SimpleNet(BaseModel):
                                  emb_weights=emb_weights)
         self.hidden = nn.Linear(hidden_size*2, 64)
         self.answer = nn.Linear(64, 2)
+        self.relu = F.relu()
 
     def forward(self, input_seq_l, input_seq_r):
         outputs_l = self.encoder_l(input_seq_l)
         logging.debug('Outputs_size: {}'.format(outputs_l.size()))
-        outputs_l = outputs_l[:, -1, :]
+        outputs_l = F.relu(outputs_l[:, -1, :])
         outputs_r = self.encoder_r(input_seq_r)
-        outputs_r = outputs_r[:, -1, :]
-        concatenated = torch.cat((outputs_l, outputs_r), 1)
+        outputs_r = F.relu(outputs_r[:, -1, :])
+        concatenated = F.relu(torch.cat((outputs_l, outputs_r), 1))
         fc = self.hidden(concatenated)
         ans = F.softmax(self.answer(fc), dim=1)
         return ans

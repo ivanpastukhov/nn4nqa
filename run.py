@@ -3,46 +3,61 @@ import torch
 import numpy as np
 import os
 import pickle
-from custom_model.model import SimpleNet, SAttendedSimpleNet, SAttendedNet
+import matplotlib.pyplot as plt
+from custom_model.model import SimpleNet, SAttendedSimpleNet, SAttendedNet, CrossAttentionNet
+import seaborn as sns
+from sklearn.metrics import roc_auc_score
 
-def run():
-    USE_CUDA = torch.cuda.is_available()
-    device = torch.device("cuda" if USE_CUDA else "cpu")
-    print('Device: ', device)
 
-    def read_pickle(fname):
-        with open(fname, 'rb') as fin:
-            return pickle.load(fin)
+USE_CUDA = torch.cuda.is_available()
+device = torch.device("cuda" if USE_CUDA else "cpu")
+print('Device: ', device)
 
-    df_train = pd.read_pickle('./data/processed/wikiqa_df_train.pickle')
-    df_test = pd.read_pickle('./data/processed/wikiqa_df_test.pickle')
-    voc = read_pickle('./data/processed/vocabulary.pickle')
+def read_pickle(fname):
+    with open(fname, 'rb') as fin:
+        return pickle.load(fin)
 
-    df_train = df_train.iloc[:12]
+df_train = pd.read_pickle('./data/processed/wikiqa_df_train.pickle')
+df_test = pd.read_pickle('./data/processed/wikiqa_df_test.pickle')
+df_test, df_val = np.split(df_test.sample(frac=1., random_state=42), 2)
+emb_weights = np.load('./data/processed/index2vector.npy')
 
-    print('Train shape: {} \n\
-    Test shape: {}'.format(df_train.shape, df_test.shape))
+vocab_size = emb_weights.shape[0]
+embed_dim = emb_weights.shape[1]
 
-    net_simple = SimpleNet(voc['voc_len'], 64, 64)
-    net_att = SAttendedNet(voc['voc_len'], 128, 64, 32, 1, 22, 287)
+# df_train = df_train.iloc[:100]
 
-    Xq = np.array(df_train.Question_encoded.values.tolist())
-    Xa = np.array(df_train.Sentence_encoded.values.tolist())
-    t = np.array(df_train.Label.values.tolist())
+print('Train shape: {} \n\
+Test shape: {} \n\
+Val shape {}: '.format(df_train.shape, df_test.shape, df_val.shape))
 
-    Xq = torch.from_numpy(Xq)
-    Xa = torch.from_numpy(Xa)
-    t = torch.from_numpy(t)
 
-    batch_size = 50
-    epochs = 5
+net_simple = SimpleNet(vocab_size, embed_dim, 64, emb_weights)
+# net_att = SAttendedSimpleNet(voc['voc_len'], 128, 128, 64, 3)
+net_att = SAttendedNet(vocab_size, embed_dim, 64, 32, 1, 22, 287, emb_weights)
+net_crossover = CrossAttentionNet(vocab_size, embed_dim, 64, 32, 1, 22, 287, emb_weights)
 
-    optimizer = torch.optim.Adam
-    loss_func = torch.nn.CrossEntropyLoss(weight=torch.tensor([0.05, 1.]).to(device))
+Xq = np.array(df_train.Question_encoded.values[:50].tolist())
+Xa = np.array(df_train.Sentence_encoded.values[:50].tolist())
+t = np.array(df_train.Label.values[:50].tolist())
 
-    net_simple.fit(Xq, Xa, t, batch_size, epochs, loss_func, optimizer, device)
-    net_att.fit(Xq, Xa, t, batch_size, epochs, loss_func, optimizer, device)
-    net_att.parameters()
+Xq = torch.from_numpy(Xq)
+Xa = torch.from_numpy(Xa)
+t = torch.from_numpy(t)
 
-if __name__ == '__main__':
-    run()
+# print(Xq.size(), Xa.size(), t.size())
+
+batch_size = 25
+epochs = 30
+
+Xq_val = np.array(df_val.Question_encoded.values.tolist())
+Xa_val = np.array(df_val.Sentence_encoded.values.tolist())
+t_val = np.array(df_val.Label.values.tolist())
+val_data = [(torch.from_numpy(Xq_val), torch.from_numpy(Xa_val)), torch.from_numpy(t_val)]
+
+optimizer = torch.optim.Adam
+loss_func = torch.nn.CrossEntropyLoss(weight=torch.tensor([0.05, 0.95]).to(device))
+
+# net_crossover.fit(Xq, Xa, t, batch_size, epochs, loss_func, optimizer, device, 90., val_data)
+net_simple.fit(Xq, Xa, t, batch_size, epochs, loss_func, optimizer, device, None, val_data)
+net_att.fit(Xq, Xa, t, batch_size, epochs, loss_func, optimizer, device, 90., val_data)
