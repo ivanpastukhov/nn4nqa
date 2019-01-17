@@ -374,3 +374,47 @@ class SAttendedNet(SimpleNet):
         fc = self.hidden(concatenated)
         ans = F.softmax(self.answer(fc), dim=1)
         return ans
+
+
+class CrossAttentionNet(SimpleNet):
+    '''
+    Четвёртый вариант сетки. В Multihead'ы подаются параметры из обеих веток сетки, поэтому получаем 2 матрицы:
+    как токены вопросов скореллированы с токенами ответов и наоборот.
+    '''
+    def __init__(self, vocab_size, embed_dim, rnn_hidden_size,
+                 attention_size, n_heads, l_seq_len, r_seq_len, emb_weights=None):
+        super(SAttendedNet, self).__init__(vocab_size, embed_dim,
+                                                 rnn_hidden_size, emb_weights=emb_weights)
+        self.l_attention = MultiheadAttention(n_heads, rnn_hidden_size,
+                                              att_size=attention_size)
+        self.r_attention = MultiheadAttention(n_heads, rnn_hidden_size,
+                                              att_size=attention_size)
+        self.l_flatten = AttentionFlattener(l_seq_len)
+        self.r_flatten = AttentionFlattener(r_seq_len)
+        self.l_linear = nn.Linear(rnn_hidden_size, rnn_hidden_size)
+        self.r_linear = nn.Linear(rnn_hidden_size, rnn_hidden_size)
+        self.l_probas = None
+        self.r_probas = None
+        self.l_scores = None
+        self.r_scores = None
+        self.similarity = nn.CosineSimilarity()
+
+
+    def forward(self, input_seq_l, input_seq_r):
+        outputs_l = self.encoder_l(input_seq_l)
+        _, self.l_probas = self.l_attention(outputs_l, outputs_l, outputs_l)
+        self.l_probas = self.l_probas[0]
+        self.l_scores = self.l_flatten(self.l_probas)
+        outputs_l = self.l_scores * outputs_l
+        left = torch.sum(outputs_l, dim=1)
+        left = self.l_linear(left)
+
+        outputs_r = self.encoder_r(input_seq_r)
+        _, self.r_probas = self.r_attention(outputs_r, outputs_r, outputs_r)
+        self.r_probas = self.r_probas[0]
+        self.r_scores = self.r_flatten(self.r_probas)
+        outputs_r = self.r_scores * outputs_r
+        right = torch.sum(outputs_r, dim=1)
+        right = self.l_linear(right)
+        ans = self.similarity(left, right)
+        return ans
