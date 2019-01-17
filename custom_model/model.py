@@ -3,7 +3,7 @@ import torch
 from torch.nn import functional as F
 from torch.autograd import Variable
 import logging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.WARNING)
 import sys
 import time
 import math
@@ -302,9 +302,9 @@ class SimpleNet(BaseModel):
     def forward(self, input_seq_l, input_seq_r):
         outputs_l = self.encoder_l(input_seq_l)
         logging.debug('Outputs_size: {}'.format(outputs_l.size()))
-        outputs_l = outputs_l[-1]
+        outputs_l = outputs_l[:, -1, :]
         outputs_r = self.encoder_r(input_seq_r)
-        outputs_r = outputs_r[-1]
+        outputs_r = outputs_r[:, -1, :]
         concatenated = torch.cat((outputs_l, outputs_r), 1)
         fc = self.hidden(concatenated)
         ans = F.softmax(self.answer(fc), dim=1)
