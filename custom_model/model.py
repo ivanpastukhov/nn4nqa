@@ -3,7 +3,7 @@ import torch
 from torch.nn import functional as F
 from torch.autograd import Variable
 import logging
-logging.basicConfig(level=logging.WARNING)
+logging.basicConfig(level=logging.DEBUG)
 import sys
 import time
 import math
@@ -161,8 +161,7 @@ class Encoder(nn.Module):
         # TODO: добавить другие RNN
         self.rnn = nn.LSTM(input_size=self.embed_dim,
                            hidden_size=self.hidden_size,
-                           num_layers=1,
-                           batch_first=True)
+                           num_layers=1)
 
         if bidirectional:
             # TODO: ...
@@ -186,8 +185,8 @@ class Encoder(nn.Module):
     def forward(self, input_seq, hidden=None):
         # TODO: torch.nn.utils.rnn.pack_padded_sequence
         embedded = self.embedding(input_seq)
+        logging.debug('Embedded size: {}'.format(embedded.size()))
         outputs, _ = self.rnn(embedded, hidden)
-        logging.debug('Outputs size: {}'.format(outputs.size()))
         return outputs
 
 
@@ -203,7 +202,7 @@ class BaseModel(nn.Module):
 
     def validation_loss(self, X_l_val, X_r_val, y_val):
         y_pred = self.__call__(X_l_val, X_r_val)
-        loss = self.loss_function(y_pred, y_val)
+        loss = self.loss_function(y_pred, y_val.squeeze(1))
         return loss
 
     def fit(self, X_left, X_right, y_train, batch_size, epochs, loss_function, optimizer, device,
@@ -235,7 +234,9 @@ class BaseModel(nn.Module):
             self.validation = True
         else:
             self.validation = False
-        assert len(X_left) == len(y_train) == len(X_right)
+        logging.debug(
+            'X_left_size: {}, y_train.size: {}, X_right_size: {}'.format(X_left.size(), y_train.size(), X_right.size()))
+        # assert len(X_left) == len(y_train) == len(X_right)
         len_dataset = len(X_left)
         step = 0
         # Initialize optimizer
@@ -253,11 +254,13 @@ class BaseModel(nn.Module):
             epoch_losses = []
             while lb < len_dataset:
                 #TODO: Использовать torch data.DataLoader вместо этого
-                x_l_batch = X_left[lb:rb].to(device)
-                x_r_batch = X_right[lb:rb].to(device)
-                y_train_batch = y_train[lb:rb].to(device)
+                x_l_batch = X_left[:,lb:rb].to(device)
+                x_r_batch = X_right[:,lb:rb].to(device)
+                y_train_batch = y_train[:,lb:rb].t().to(device)
                 y_pred_batch = self.__call__(x_l_batch, x_r_batch)
-                batch_loss = self.loss_function(y_pred_batch, y_train_batch).to(device)
+                a = y_pred_batch
+                b = y_train_batch.squeeze(1)
+                batch_loss = self.loss_function(a, b).to(device)
                 epoch_losses.append(batch_loss.item())
                 batch_loss.backward()
                 self.optimizer.step()
@@ -303,12 +306,11 @@ class SimpleNet(BaseModel):
         self.answer = nn.Linear(64, 2)
 
     def forward(self, input_seq_l, input_seq_r):
-        outputs_l = self.encoder_l(input_seq_l)
-        logging.debug('Outputs_size: {}'.format(outputs_l.size()))
-        outputs_l = F.relu(outputs_l[:, -1, :])
-        outputs_r = self.encoder_r(input_seq_r)
-        outputs_r = F.relu(outputs_r[:, -1, :])
-        concatenated = F.relu(torch.cat((outputs_l, outputs_r), 1))
+        logging.debug('Inputs size: {},{}'.format(input_seq_l.size(), input_seq_r.size()))
+        outputs_l = self.encoder_l(input_seq_l)[-1]
+        outputs_r = self.encoder_r(input_seq_r)[-1]
+        logging.debug('Outputs_l,r: {},{}'.format(outputs_l.size(), outputs_r.size()))
+        concatenated = torch.cat((outputs_l, outputs_r), 1)
         fc = self.hidden(concatenated)
         ans = F.softmax(self.answer(fc), dim=1)
         return ans

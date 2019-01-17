@@ -41,22 +41,24 @@ Xq = np.array(df_train.Question_encoded.values[:50].tolist())
 Xa = np.array(df_train.Sentence_encoded.values[:50].tolist())
 t = np.array(df_train.Label.values[:50].tolist())
 
-Xq = torch.from_numpy(Xq)
-Xa = torch.from_numpy(Xa)
-t = torch.from_numpy(t)
+print(torch.from_numpy(Xq).size())
+Xq = torch.from_numpy(Xq).permute(1,0)
+Xa = torch.from_numpy(Xa).permute(1,0)
+t = torch.from_numpy(t).unsqueeze(0)
 
 # print(Xq.size(), Xa.size(), t.size())
 
-batch_size = 25
+batch_size = 27
 epochs = 30
 
 Xq_val = np.array(df_val.Question_encoded.values.tolist())
 Xa_val = np.array(df_val.Sentence_encoded.values.tolist())
 t_val = np.array(df_val.Label.values.tolist())
-val_data = [(torch.from_numpy(Xq_val), torch.from_numpy(Xa_val)), torch.from_numpy(t_val)]
+val_data = [(torch.from_numpy(Xq_val).permute(1,0), torch.from_numpy(Xa_val).permute(1,0)), torch.from_numpy(t_val).unsqueeze(1)]
 
 optimizer = torch.optim.Adam
-loss_func = torch.nn.CrossEntropyLoss(weight=torch.tensor([0.05, 0.95]).to(device))
+# loss_func = torch.nn.CrossEntropyLoss(weight=torch.tensor([0.05, 0.95]).to(device))
+loss_func = torch.nn.CrossEntropyLoss()
 
 # net_crossover.fit(Xq, Xa, t, batch_size, epochs, loss_func, optimizer, device, 90., val_data)
 net_simple.fit(Xq, Xa, t, batch_size, epochs, loss_func, optimizer, device, None, val_data)
