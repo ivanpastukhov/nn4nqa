@@ -301,9 +301,9 @@ class SimpleNet(BaseModel):
 
     def forward(self, input_seq_l, input_seq_r):
         outputs_l = self.encoder_l(input_seq_l)
-        outputs_l = torch.mean(outputs_l, 1)
+        outputs_l = outputs_l[-1]
         outputs_r = self.encoder_r(input_seq_r)
-        outputs_r = torch.mean(outputs_r, 1)
+        outputs_r = outputs_r[-1]
         concatenated = torch.cat((outputs_l, outputs_r), 1)
         fc = self.hidden(concatenated)
         ans = F.softmax(self.answer(fc), dim=1)
