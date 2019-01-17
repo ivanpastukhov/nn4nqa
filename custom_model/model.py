@@ -349,20 +349,24 @@ class SAttendedNet(SimpleNet):
         self.l_flatten = AttentionFlattener(l_seq_len)
         self.r_flatten = AttentionFlattener(r_seq_len)
         self.l_probas = None
+        self.r_probas = None
+        self.l_scores = None
+        self.r_scores = None
+
 
     def forward(self, input_seq_l, input_seq_r):
         outputs_l = self.encoder_l(input_seq_l)
         _, self.l_probas = self.l_attention(outputs_l, outputs_l, outputs_l)
         self.l_probas = self.l_probas[0]
-        scores_l = self.l_flatten(self.l_probas)
-        outputs_l = scores_l * outputs_l
+        self.l_scores = self.l_flatten(self.l_probas)
+        outputs_l = self.l_scores * outputs_l
         left = torch.sum(outputs_l, dim=1)
 
         outputs_r = self.encoder_r(input_seq_r)
         _, self.r_probas = self.r_attention(outputs_r, outputs_r, outputs_r)
         self.r_probas = self.r_probas[0]
-        scores_r = self.r_flatten(self.r_probas)
-        outputs_r = scores_r * outputs_r
+        self.r_scores = self.r_flatten(self.r_probas)
+        outputs_r = self.r_scores * outputs_r
         right = torch.sum(outputs_r, dim=1)
 
         concatenated = torch.cat((left, right), 1)
