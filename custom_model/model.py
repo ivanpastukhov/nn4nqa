@@ -383,7 +383,7 @@ class CrossAttentionNet(SimpleNet):
     '''
     def __init__(self, vocab_size, embed_dim, rnn_hidden_size,
                  attention_size, n_heads, l_seq_len, r_seq_len, emb_weights=None):
-        super(SAttendedNet, self).__init__(vocab_size, embed_dim,
+        super(CrossAttentionNet, self).__init__(vocab_size, embed_dim,
                                                  rnn_hidden_size, emb_weights=emb_weights)
         self.l_attention = MultiheadAttention(n_heads, rnn_hidden_size,
                                               att_size=attention_size)
