@@ -313,9 +313,9 @@ class SimpleNet(BaseModel):
 class SAttendedSimpleNet(SimpleNet):
     '''Вторая версия сетки: вопрос проходит через Multihead attention, полученные вектора усредняются в один вектор.'''
     def __init__(self, vocab_size, embed_dim, rnn_hidden_size,
-                 attention_size, n_heads):
+                 attention_size, n_heads, emb_weights=None):
         super(SAttendedSimpleNet, self).__init__(vocab_size, embed_dim,
-                                                 rnn_hidden_size)
+                                                 rnn_hidden_size, emb_weights=emb_weights)
         self.l_attention = MultiheadAttention(n_heads, rnn_hidden_size,
                                               att_size=attention_size)
         self.l_probas = None
@@ -339,9 +339,9 @@ class SAttendedNet(SimpleNet):
     перемножаются на скоры и суммируются в один вектор.
     '''
     def __init__(self, vocab_size, embed_dim, rnn_hidden_size,
-                 attention_size, n_heads, l_seq_len, r_seq_len):
+                 attention_size, n_heads, l_seq_len, r_seq_len, emb_weights=None):
         super(SAttendedNet, self).__init__(vocab_size, embed_dim,
-                                                 rnn_hidden_size)
+                                                 rnn_hidden_size, emb_weights=emb_weights)
         self.l_attention = MultiheadAttention(n_heads, rnn_hidden_size,
                                               att_size=attention_size)
         self.r_attention = MultiheadAttention(n_heads, rnn_hidden_size,

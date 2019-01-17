@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d8a6d816-c15c-496b-ba80-d91757b05dc3" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/custom_model/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/custom_model/model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/net.torch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/embed2pickle.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/vocab.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -32,17 +28,18 @@
       <file leaf-file-name="model.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/custom_model/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="511">
-              <caret line="300" lean-forward="true" selection-start-line="300" selection-end-line="300" />
+            <state relative-caret-position="367">
+              <caret line="317" column="89" selection-start-line="317" selection-start-column="89" selection-end-line="317" selection-end-column="89" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
                 <element signature="e#4402#5772#0" />
+                <element signature="e#5805#7244#0" />
                 <element signature="e#6446#6497#0" />
                 <element signature="e#6526#6578#0" />
                 <element signature="e#6929#10838#0" />
                 <element signature="e#7486#8303#0" />
                 <element signature="e#8430#10838#0" />
-                <element signature="e#11986#13004#0" />
+                <element signature="e#10873#11942#0" />
                 <element signature="e#13042#14898#0" />
               </folding>
             </state>
@@ -298,7 +295,7 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26752505" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26752505" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
@@ -307,7 +304,7 @@
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.24484849" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32484847" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.22424242" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.22424242" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4521212" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -364,12 +361,13 @@
           <folding>
             <element signature="e#0#20#0" expanded="true" />
             <element signature="e#4402#5772#0" />
+            <element signature="e#5805#7244#0" />
             <element signature="e#6446#6497#0" />
             <element signature="e#6526#6578#0" />
             <element signature="e#6929#10838#0" />
             <element signature="e#7486#8303#0" />
             <element signature="e#8430#10838#0" />
-            <element signature="e#11986#13004#0" />
+            <element signature="e#10873#11942#0" />
             <element signature="e#13042#14898#0" />
           </folding>
         </state>
@@ -664,17 +662,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/custom_model/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="511">
-          <caret line="300" lean-forward="true" selection-start-line="300" selection-end-line="300" />
+        <state relative-caret-position="367">
+          <caret line="317" column="89" selection-start-line="317" selection-start-column="89" selection-end-line="317" selection-end-column="89" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
             <element signature="e#4402#5772#0" />
+            <element signature="e#5805#7244#0" />
             <element signature="e#6446#6497#0" />
             <element signature="e#6526#6578#0" />
             <element signature="e#6929#10838#0" />
             <element signature="e#7486#8303#0" />
             <element signature="e#8430#10838#0" />
-            <element signature="e#11986#13004#0" />
+            <element signature="e#10873#11942#0" />
             <element signature="e#13042#14898#0" />
           </folding>
         </state>
