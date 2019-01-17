@@ -157,7 +157,7 @@ class Encoder(nn.Module):
         self.hidden_size = hidden_size
         self.dropout = dropout
         self.embedding = nn.Embedding(num_embeddings=self.vocab_size,
-                                      embedding_dim=self.embed_dim)
+                                      embedding_dim=self.embed_dim, padding_idx=0)
         # TODO: добавить другие RNN
         self.rnn = nn.LSTM(input_size=self.embed_dim,
                                hidden_size=self.hidden_size)
