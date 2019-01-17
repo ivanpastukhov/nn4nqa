@@ -168,7 +168,7 @@ class Encoder(nn.Module):
         if dropout:
             # TODO: ...
             raise  NotImplementedError()
-        if emb_weights:
+        if emb_weights.all() != None:
             if not isinstance(emb_weights, np.ndarray):
                 raise ValueError('Embedding weights must be a numpy array.')
             if emb_weights.shape != (self.vocab_size, self.embed_dim):
