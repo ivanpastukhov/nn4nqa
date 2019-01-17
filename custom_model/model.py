@@ -237,7 +237,8 @@ class BaseModel(nn.Module):
         len_dataset = len(X_left)
         step = 0
         # Initialize optimizer
-        self.optimizer = self.optimizer(self.parameters())
+        # TODO: проследить, чтобы в optimizer'e обновлялись параметры при разморозке эмбеддингов
+        self.optimizer = self.optimizer(filter(lambda x: x.requires_grad, self.parameters()))
         if clip:
             _ = nn.utils.clip_grad_norm(self.parameters(), clip)
         self.to(device)
