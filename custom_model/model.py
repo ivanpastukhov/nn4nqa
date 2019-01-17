@@ -301,6 +301,7 @@ class SimpleNet(BaseModel):
 
     def forward(self, input_seq_l, input_seq_r):
         outputs_l = self.encoder_l(input_seq_l)
+        logging.debug('Outputs_size: {}'.format(outputs_l.size()))
         outputs_l = outputs_l[-1]
         outputs_r = self.encoder_r(input_seq_r)
         outputs_r = outputs_r[-1]
