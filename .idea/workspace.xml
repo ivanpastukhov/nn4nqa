@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d8a6d816-c15c-496b-ba80-d91757b05dc3" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/utils/embed2pickle.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/vocab.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/custom_model/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/custom_model/model.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,8 +19,8 @@
       <file leaf-file-name="att_toy_example.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/att_toy_example.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="12" column="32" lean-forward="true" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
+            <state relative-caret-position="135">
+              <caret line="12" column="32" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -25,20 +28,39 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="model.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="model.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/custom_model/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="41" selection-start-line="5" selection-start-column="41" selection-end-line="5" selection-end-column="41" />
+            <state relative-caret-position="4035">
+              <caret line="273" column="27" selection-start-line="273" selection-start-column="27" selection-end-line="273" selection-end-column="27" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
-                <element signature="e#706#1393#0" />
-                <element signature="e#1423#2056#0" />
-                <element signature="e#3595#4965#0" />
-                <element signature="e#4998#6087#0" />
-                <element signature="e#6677#10607#0" />
-                <element signature="e#6675#6702#0" />
-                <element signature="e#8405#9390#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="utils.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/utils/utils.py">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="vocab.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/utils/vocab.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" selection-start-line="2" selection-end-line="2" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="embed2pickle.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/utils/embed2pickle.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="16" selection-start-line="16" selection-end-line="24" selection-end-column="28" />
+              <folding>
+                <element signature="e#86#99#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -47,7 +69,7 @@
       <file leaf-file-name="run.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/run.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
+            <state relative-caret-position="315">
               <caret line="26" column="14" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="67" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
@@ -101,6 +123,8 @@
         <option value="$PROJECT_DIR$/att_toy_example.py" />
         <option value="$PROJECT_DIR$/run.py" />
         <option value="$PROJECT_DIR$/custom_model/model.py" />
+        <option value="$PROJECT_DIR$/utils/embed2pickle.py" />
+        <option value="$PROJECT_DIR$/utils/vocab.py" />
       </list>
     </option>
   </component>
@@ -113,6 +137,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -123,23 +148,17 @@
             <path>
               <item name="nn4nqa" type="b2602c69:ProjectViewProjectNode" />
               <item name="nn4nqa" type="462c0819:PsiDirectoryNode" />
-              <item name="custom_model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="nn4nqa" type="b2602c69:ProjectViewProjectNode" />
-              <item name="nn4nqa" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
+              <item name="utils" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -166,7 +185,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.run">
+  <component name="RunManager" selected="Python.embed2pickle">
     <configuration name="att_toy_example" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="nn4nqa" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -185,7 +204,7 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="model" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="embed2pickle" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="nn4nqa" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -193,11 +212,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/model" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/utils" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/model/model.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/utils/embed2pickle.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -259,18 +278,18 @@
     </configuration>
     <list>
       <item itemvalue="Python.run" />
-      <item itemvalue="Python.model" />
       <item itemvalue="Python.train" />
       <item itemvalue="Python.playground" />
       <item itemvalue="Python.att_toy_example" />
+      <item itemvalue="Python.embed2pickle" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.embed2pickle" />
         <item itemvalue="Python.run" />
         <item itemvalue="Python.att_toy_example" />
         <item itemvalue="Python.playground" />
         <item itemvalue="Python.train" />
-        <item itemvalue="Python.model" />
       </list>
     </recent_temporary>
   </component>
@@ -289,20 +308,19 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2639485" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26752505" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
-      <window_info anchor="right" x="0" y="0" width="310" height="700" id="Documentation" order="3" side_tool="true" weight="0.2360515" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32484847" />
+      <window_info anchor="right" x="0" y="0" width="310" height="700" id="Documentation" order="3" side_tool="true" visible="true" weight="0.2360515" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.24484849" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32484847" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.22424242" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4521212" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4521212" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -327,7 +345,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="43" />
+      <option name="time" value="44" />
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
@@ -350,29 +368,12 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/att_toy_example.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="10" column="35" selection-start-line="10" selection-start-column="35" selection-end-line="10" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/custom_model/model.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="10" column="36" lean-forward="true" selection-start-line="10" selection-start-column="36" selection-end-line="10" selection-end-column="36" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
-            <element signature="e#706#1393#0" />
-            <element signature="e#1423#2056#0" />
-            <element signature="e#3595#4965#0" />
-            <element signature="e#4998#6087#0" />
-            <element signature="e#6677#10607#0" />
-            <element signature="e#6675#6702#0" />
-            <element signature="e#8405#9390#0" />
           </folding>
         </state>
       </provider>
@@ -418,9 +419,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="975">
           <caret line="70" column="75" selection-start-line="70" selection-start-column="75" selection-end-line="70" selection-end-column="75" />
-          <folding>
-            <element signature="e#55#67#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -447,9 +445,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4635">
           <caret line="314" column="33" lean-forward="true" selection-start-line="314" selection-start-column="33" selection-end-line="314" selection-end-column="33" />
-          <folding>
-            <element signature="e#55#67#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -460,9 +455,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5880">
           <caret line="392" column="76" lean-forward="true" selection-start-line="392" selection-start-column="76" selection-end-line="392" selection-end-column="76" />
-          <folding>
-            <element signature="e#55#67#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -539,9 +531,6 @@
     <entry file="file:///anaconda3/lib/python3.6/logging/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/utils.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/tokenizers/utils.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -609,9 +598,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
           <caret line="23" column="10" selection-start-line="23" selection-start-column="10" selection-end-line="23" selection-end-column="10" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -619,9 +605,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2047">
           <caret line="420" column="24" selection-start-line="420" selection-start-column="21" selection-end-line="420" selection-end-column="24" />
-          <folding>
-            <element signature="e#55#67#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -636,16 +619,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="202">
           <caret line="490" selection-start-line="490" selection-end-line="490" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/att_toy_example.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="32" lean-forward="true" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
+        <state relative-caret-position="135">
+          <caret line="12" column="32" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -654,7 +634,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/run.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
+        <state relative-caret-position="315">
           <caret line="26" column="14" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="67" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
@@ -664,17 +644,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/custom_model/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="41" selection-start-line="5" selection-start-column="41" selection-end-line="5" selection-end-column="41" />
+        <state relative-caret-position="4035">
+          <caret line="273" column="27" selection-start-line="273" selection-start-column="27" selection-end-line="273" selection-end-column="27" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
-            <element signature="e#706#1393#0" />
-            <element signature="e#1423#2056#0" />
-            <element signature="e#3595#4965#0" />
-            <element signature="e#4998#6087#0" />
-            <element signature="e#6677#10607#0" />
-            <element signature="e#6675#6702#0" />
-            <element signature="e#8405#9390#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/utils.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/vocab.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/embed2pickle.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" selection-start-line="16" selection-end-line="24" selection-end-column="28" />
+          <folding>
+            <element signature="e#86#99#0" expanded="true" />
           </folding>
         </state>
       </provider>

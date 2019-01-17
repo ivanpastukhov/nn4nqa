@@ -272,6 +272,7 @@ class BaseModel(nn.Module):
 
 
 class SimpleNet(BaseModel):
+    '''Самая простая сетка. Предложения кодируются в один вектор и сравниваются.'''
     def __init__(self, vocab_size, embed_dim, hidden_size):
         super().__init__()
         self.vocab_size = vocab_size
@@ -298,6 +299,7 @@ class SimpleNet(BaseModel):
 
 
 class SAttendedSimpleNet(SimpleNet):
+    '''Вторая версия сетки: вопрос проходит через Multihead attention, полученные вектора усредняются в один вектор.'''
     def __init__(self, vocab_size, embed_dim, rnn_hidden_size,
                  attention_size, n_heads):
         super(SAttendedSimpleNet, self).__init__(vocab_size, embed_dim,
@@ -319,6 +321,11 @@ class SAttendedSimpleNet(SimpleNet):
 
 
 class SAttendedNet(SimpleNet):
+    '''
+    Третий вариант сетки. Вопрос и ответ проходят через Multihead, из которого достаётся матрица скоров (Attention
+    probabilities), затем эта матрица сжимается в вектор скоров с помощью AttentionFlattener. Исходные вектора
+    перемножаются на скоры и суммируются в один вектор.
+    '''
     def __init__(self, vocab_size, embed_dim, rnn_hidden_size,
                  attention_size, n_heads, l_seq_len, r_seq_len):
         super(SAttendedNet, self).__init__(vocab_size, embed_dim,
