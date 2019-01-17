@@ -149,8 +149,8 @@ class PositionalEncoding(nn.Module):
 
 
 class Encoder(nn.Module):
-    def __init__(self, vocab_size, embed_dim, hidden_size, bidirectional=False, pretrained_emb=False,
-                 dropout=False):
+    def __init__(self, vocab_size, embed_dim, hidden_size, bidirectional=False, dropout=False,
+                 emb_weights=None):
         super(Encoder, self).__init__()
         self.vocab_size = vocab_size
         self.embed_dim = embed_dim
@@ -165,12 +165,22 @@ class Encoder(nn.Module):
         if bidirectional:
             # TODO: ...
             raise NotImplementedError()
-        if pretrained_emb:
-            # TODO: ...
-            raise  NotImplementedError()
         if dropout:
             # TODO: ...
             raise  NotImplementedError()
+        if emb_weights:
+            if not isinstance(emb_weights, np.ndarray):
+                raise ValueError('Embedding weights must be a numpy array.')
+            if emb_weights.shape != (self.vocab_size, self.embed_dim):
+                raise ValueError('Size of embedding matrix must be equal to ones used in initialization.')
+            emb_weights = torch.from_numpy(emb_weights)
+            self.embedding = nn.Embedding.from_pretrained(emb_weights, freeze=True)
+
+    def freeze_embeddings(self):
+        self.embedding.freeze = True
+
+    def unfreeze_embeddings(self):
+        self.embedding.freeze = False
 
     def forward(self, input_seq, hidden=None):
         # TODO: torch.nn.utils.rnn.pack_padded_sequence
@@ -273,17 +283,19 @@ class BaseModel(nn.Module):
 
 class SimpleNet(BaseModel):
     '''Самая простая сетка. Предложения кодируются в один вектор и сравниваются.'''
-    def __init__(self, vocab_size, embed_dim, hidden_size):
+    def __init__(self, vocab_size, embed_dim, hidden_size, emb_weights=None):
         super().__init__()
         self.vocab_size = vocab_size
         self.embed_dim = embed_dim
         self.hidden_size = hidden_size
         self.encoder_l = Encoder(self.vocab_size,
                                  self.embed_dim,
-                                 self.hidden_size)
+                                 self.hidden_size,
+                                 emb_weights=emb_weights)
         self.encoder_r = Encoder(self.vocab_size,
                                  self.embed_dim,
-                                 self.hidden_size)
+                                 self.hidden_size,
+                                 emb_weights=emb_weights)
         self.hidden = nn.Linear(hidden_size*2, 64)
         self.answer = nn.Linear(64, 2)
 
