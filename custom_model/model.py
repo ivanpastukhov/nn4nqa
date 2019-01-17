@@ -168,12 +168,10 @@ class Encoder(nn.Module):
         if dropout:
             # TODO: ...
             raise  NotImplementedError()
-        if emb_weights.all() != None:
-            if not isinstance(emb_weights, np.ndarray):
-                raise ValueError('Embedding weights must be a numpy array.')
+        if not isinstance(emb_weights, type(None)):
             if emb_weights.shape != (self.vocab_size, self.embed_dim):
                 raise ValueError('Size of embedding matrix must be equal to ones used in initialization.')
-            emb_weights = torch.from_numpy(emb_weights).double()
+            emb_weights = torch.from_numpy(emb_weights).float()
             self.embedding = nn.Embedding.from_pretrained(emb_weights, freeze=True)
 
     def freeze_embeddings(self):
