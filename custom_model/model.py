@@ -169,6 +169,7 @@ class Encoder(nn.Module):
             # TODO: ...
             raise  NotImplementedError()
         if not isinstance(emb_weights, type(None)):
+
             if emb_weights.shape != (self.vocab_size, self.embed_dim):
                 raise ValueError('Size of embedding matrix must be equal to ones used in initialization.')
             emb_weights = torch.from_numpy(emb_weights).float()
