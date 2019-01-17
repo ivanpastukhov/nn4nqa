@@ -417,9 +417,7 @@ class CrossAttentionNet(SimpleNet):
         outputs_r = self.r_scores * outputs_r
         right = torch.sum(outputs_r, dim=1)
         right = self.l_linear(right)
-        print(left.size(), right.size())
         ans = self.similarity(left, right).unsqueeze(1)
-        print(ans.size())
         ans = self.final_layer(ans)
         ans = F.softmax(ans, dim=1)
         return ans
