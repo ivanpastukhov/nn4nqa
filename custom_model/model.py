@@ -420,5 +420,5 @@ class CrossAttentionNet(SimpleNet):
         ans = self.similarity(left, right)
 
         ans = self.final_layer(ans)
-        ans = F.softmax(ans)
+        ans = F.softmax(ans, dim=1)
         return ans
