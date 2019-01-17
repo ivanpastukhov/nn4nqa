@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d8a6d816-c15c-496b-ba80-d91757b05dc3" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/custom_model/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/custom_model/model.py" afterDir="false" />
-    </list>
+    <list default="true" id="d8a6d816-c15c-496b-ba80-d91757b05dc3" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -28,8 +26,8 @@
       <file leaf-file-name="model.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/custom_model/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="279">
-              <caret line="154" column="36" lean-forward="true" selection-start-line="154" selection-start-column="36" selection-end-line="154" selection-end-column="36" />
+            <state relative-caret-position="369">
+              <caret line="160" column="35" lean-forward="true" selection-start-line="160" selection-start-column="35" selection-end-line="160" selection-end-column="35" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
                 <element signature="e#4402#5772#0" />
@@ -658,8 +656,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/custom_model/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="154" column="36" lean-forward="true" selection-start-line="154" selection-start-column="36" selection-end-line="154" selection-end-column="36" />
+        <state relative-caret-position="369">
+          <caret line="160" column="35" lean-forward="true" selection-start-line="160" selection-start-column="35" selection-end-line="160" selection-end-column="35" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
             <element signature="e#4402#5772#0" />
