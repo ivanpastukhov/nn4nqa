@@ -173,7 +173,7 @@ class Encoder(nn.Module):
                 raise ValueError('Embedding weights must be a numpy array.')
             if emb_weights.shape != (self.vocab_size, self.embed_dim):
                 raise ValueError('Size of embedding matrix must be equal to ones used in initialization.')
-            emb_weights = torch.from_numpy(emb_weights)
+            emb_weights = torch.from_numpy(emb_weights).double()
             self.embedding = nn.Embedding.from_pretrained(emb_weights, freeze=True)
 
     def freeze_embeddings(self):
