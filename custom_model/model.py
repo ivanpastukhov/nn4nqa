@@ -206,7 +206,7 @@ class SAttendedSimpleNet(SimpleNet):
         outputs_r = torch.mean(outputs_r, 1)
         concatenated = torch.cat((outputs_l, outputs_r), 1)
         fc = self.hidden(concatenated)
-        # ans = F.softmax(self.answer(fc), dim=1)
+        ans = self.answer(fc)
         return ans
 
 
