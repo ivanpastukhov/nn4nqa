@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d8a6d816-c15c-496b-ba80-d91757b05dc3" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/custom_model/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/custom_model/layers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/custom_model/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/custom_model/model.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -31,11 +28,10 @@
       <file leaf-file-name="model.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/custom_model/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-712">
-              <caret line="151" lean-forward="true" selection-start-line="151" selection-end-line="151" />
+            <state relative-caret-position="-2658">
+              <caret line="25" column="25" lean-forward="true" selection-start-line="25" selection-start-column="25" selection-end-line="25" selection-end-column="25" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
-                <element signature="e#2097#2126#0" />
                 <element signature="e#15847#17854#0" />
                 <element signature="e#17101#17872#0" />
               </folding>
@@ -47,7 +43,7 @@
         <entry file="file://$PROJECT_DIR$/custom_model/layers.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="575">
-              <caret line="99" lean-forward="true" selection-start-line="99" selection-end-line="99" />
+              <caret line="99" selection-start-line="99" selection-end-line="99" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
                 <element signature="e#607#1294#0" />
@@ -142,7 +138,20 @@
             <path>
               <item name="nn4nqa" type="b2602c69:ProjectViewProjectNode" />
               <item name="nn4nqa" type="462c0819:PsiDirectoryNode" />
-              <item name="custom_model" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="nn4nqa" type="b2602c69:ProjectViewProjectNode" />
+              <item name="nn4nqa" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+              <item name="embedding" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="nn4nqa" type="b2602c69:ProjectViewProjectNode" />
+              <item name="nn4nqa" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+              <item name="embedding" type="462c0819:PsiDirectoryNode" />
+              <item name="glove.6B" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -311,16 +320,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32969698" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" x="0" y="0" width="310" height="700" id="Documentation" order="3" side_tool="true" visible="true" weight="0.2360515" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Python Console" order="10" visible="true" weight="0.35272726" />
+      <window_info anchor="bottom" id="Python Console" order="10" weight="0.35272726" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32484847" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.13939394" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26752505" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.26060605" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20529328" />
       <window_info anchor="bottom" id="Docker" order="7" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.2169697" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -723,7 +731,7 @@
     <entry file="file://$PROJECT_DIR$/custom_model/layers.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="575">
-          <caret line="99" lean-forward="true" selection-start-line="99" selection-end-line="99" />
+          <caret line="99" selection-start-line="99" selection-end-line="99" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
             <element signature="e#607#1294#0" />
@@ -734,11 +742,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/custom_model/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-712">
-          <caret line="151" lean-forward="true" selection-start-line="151" selection-end-line="151" />
+        <state relative-caret-position="-2658">
+          <caret line="25" column="25" lean-forward="true" selection-start-line="25" selection-start-column="25" selection-end-line="25" selection-end-column="25" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
-            <element signature="e#2097#2126#0" />
             <element signature="e#15847#17854#0" />
             <element signature="e#17101#17872#0" />
           </folding>

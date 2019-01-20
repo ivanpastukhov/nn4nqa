@@ -175,7 +175,7 @@ class SimpleNet(BaseModel):
                                  emb_weights=emb_weights,
                                  dropout=dropout)
         self.hidden = nn.Linear(hidden_size*2, 64)
-        self.answer = nn.Linear(64, 2)
+        self.answer = nn.Linear(64, 1)
 
     def forward(self, input_seq_l, input_seq_r):
         logging.debug('Inputs size: {},{}'.format(input_seq_l.size(), input_seq_r.size()))
@@ -206,7 +206,7 @@ class SAttendedSimpleNet(SimpleNet):
         outputs_r = torch.mean(outputs_r, 1)
         concatenated = torch.cat((outputs_l, outputs_r), 1)
         fc = self.hidden(concatenated)
-        ans = F.softmax(self.answer(fc), dim=1)
+        # ans = F.softmax(self.answer(fc), dim=1)
         return ans
 
 
