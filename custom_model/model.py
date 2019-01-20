@@ -32,12 +32,19 @@ class Encoder(nn.Module):
             emb_weights = torch.from_numpy(emb_weights).float()
             self.embedding = nn.Embedding.from_pretrained(emb_weights, freeze=True)
         # TODO: добавить другие RNN
-        self.rnn = nn.LSTM(input_size=self.embed_dim,
-                           hidden_size=self.hidden_size,
-                           num_layers=1,
-                           batch_first=batch_first,
-                           dropout=dropout,
-                           bidirectional=bidirectional)
+        if dropout:
+            self.rnn = nn.LSTM(input_size=self.embed_dim,
+                               hidden_size=self.hidden_size,
+                               num_layers=1,
+                               batch_first=batch_first,
+                               dropout=dropout,
+                               bidirectional=bidirectional)
+        else:
+            self.rnn = nn.LSTM(input_size=self.embed_dim,
+                               hidden_size=self.hidden_size,
+                               num_layers=1,
+                               batch_first=batch_first,
+                               bidirectional=bidirectional)
 
     def freeze_embeddings(self):
         self.embedding.freeze = True
@@ -53,106 +60,106 @@ class Encoder(nn.Module):
         return outputs
 
 
-# class BaseModel(nn.Module):
-#     def __init__(self):
-#         super().__init__()
-#         self.losses = []
-#         self.val_losses = []
-#         self.steps = []
-#
-#     def forward(self, *input):
-#         raise NotImplementedError('Class must be implemented in child class.')
-#
-#     def validation_loss(self, X_l_val, X_r_val, y_val):
-#         y_pred = self.__call__(X_l_val, X_r_val)
-#         loss = self.loss_function(y_pred, y_val.squeeze(1))
-#         return loss
-#
-#     def fit(self, X_left, X_right, y_train, batch_size, epochs, loss_function, optimizer, device,
-#             clip=None, val_data=None):
-#         """
-#         Fit the model.
-#         :param X_left: pytorch.Tensor object, sequences of encoded phrases. Usually questions.
-#         :param X_right: pytorch.Tensor object, sequences of encoded phrases. Usually answers.
-#         :param y_train: pytorch.Tensor object, array of target labels
-#         :param batch_size: int, size of batch.
-#         :param epochs: int, number of epochs.
-#         :param loss_function: function, scalar must be returned.
-#         :param optimizer: torch optimizer object
-#         :param device: str, 'cuda' or 'cpu'
-#         :param val_data: validation data like (X_val, y_val) is used to obtain vlidation results during training process.
-#         :return:
-#         """
-#         self._fit(X_left, X_right, y_train, batch_size, epochs, loss_function, optimizer, device, clip, val_data)  # custom logic
-#
-#     def _fit(self, X_left, X_right, y_train, batch_size, epochs, loss_function, optimizer, device, clip,  val_data):
-#         self.loss_function = loss_function
-#         self.optimizer = optimizer
-#         if val_data:
-#             x_val, y_val = val_data
-#             x_l_val, x_r_val = x_val
-#             x_l_val = x_l_val.to(device)
-#             x_r_val = x_r_val.to(device)
-#             y_val = y_val.to(device)
-#             self.validation = True
-#         else:
-#             self.validation = False
-#         logging.debug(
-#             'X_left_size: {}, y_train.size: {}, X_right_size: {}'.format(X_left.size(), y_train.size(), X_right.size()))
-#         # assert len(X_left) == len(y_train) == len(X_right)
-#         len_dataset = len(X_left)
-#         step = 0
-#         # Initialize optimizer
-#         # TODO: проследить, чтобы в optimizer'e обновлялись параметры при разморозке эмбеддингов
-#         self.optimizer = self.optimizer(filter(lambda x: x.requires_grad, self.parameters()))
-#         if clip:
-#             _ = nn.utils.clip_grad_norm(self.parameters(), clip)
-#         self.to(device)
-#         print('Training...')
-#         # self.optimizer.zero_grad()
-#         for epoch in range(epochs):
-#             start_time = time.time()
-#             lb = 0
-#             rb = batch_size
-#             epoch_losses = []
-#             while lb < len_dataset:
-#                 #TODO: Использовать torch data.DataLoader вместо этого
-#                 x_l_batch = X_left[:,lb:rb].to(device)
-#                 x_r_batch = X_right[:,lb:rb].to(device)
-#                 y_train_batch = y_train[:,lb:rb].t().to(device)
-#                 y_pred_batch = self.__call__(x_l_batch, x_r_batch)
-#                 a = y_pred_batch
-#                 b = y_train_batch.squeeze(1)
-#                 batch_loss = self.loss_function(a, b).to(device)
-#                 epoch_losses.append(batch_loss.item())
-#                 batch_loss.backward()
-#                 self.optimizer.step()
-#                 self.optimizer.zero_grad()
-#                 # update counters
-#                 rb += batch_size
-#                 lb += batch_size
-#                 step += 1
-#                 self.steps.append(step)
-#                 # progress bar
-#                 sys.stdout.write("")
-#                 sys.stdout.flush()
-#             epoch_loss = np.mean(epoch_losses)
-#             self.losses.append(epoch_loss)
-#             end_time = time.time()
-#             if self.validation:
-#                 with torch.no_grad():
-#                     val_loss = self.validation_loss(x_l_val, x_r_val, y_val)
-#                     self.val_losses.append(val_loss.item())
-#                     print('Epoch: {}, loss: {:0.5f}. {:0.2} [s] per epoch. Val loss: {:0.5f}'.format(epoch, epoch_loss, end_time - start_time, val_loss))
-#             else:
-#                 print('Epoch: {}, loss: {:0.5f}. {:0.2} [s] per epoch'.format(epoch, epoch_loss, end_time - start_time))
-#
-#         print('Done!')
+class BaseModel(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.losses = []
+        self.val_losses = []
+        self.steps = []
+
+    def forward(self, *input):
+        raise NotImplementedError('Class must be implemented in child class.')
+
+    def validation_loss(self, X_l_val, X_r_val, y_val):
+        y_pred = self.__call__(X_l_val, X_r_val)
+        loss = self.loss_function(y_pred, y_val.squeeze(1))
+        return loss
+
+    def fit(self, X_left, X_right, y_train, batch_size, epochs, loss_function, optimizer, device,
+            clip=None, val_data=None):
+        """
+        Fit the model.
+        :param X_left: pytorch.Tensor object, sequences of encoded phrases. Usually questions.
+        :param X_right: pytorch.Tensor object, sequences of encoded phrases. Usually answers.
+        :param y_train: pytorch.Tensor object, array of target labels
+        :param batch_size: int, size of batch.
+        :param epochs: int, number of epochs.
+        :param loss_function: function, scalar must be returned.
+        :param optimizer: torch optimizer object
+        :param device: str, 'cuda' or 'cpu'
+        :param val_data: validation data like (X_val, y_val) is used to obtain vlidation results during training process.
+        :return:
+        """
+        self._fit(X_left, X_right, y_train, batch_size, epochs, loss_function, optimizer, device, clip, val_data)  # custom logic
+
+    def _fit(self, X_left, X_right, y_train, batch_size, epochs, loss_function, optimizer, device, clip,  val_data):
+        self.loss_function = loss_function
+        self.optimizer = optimizer
+        if val_data:
+            x_val, y_val = val_data
+            x_l_val, x_r_val = x_val
+            x_l_val = x_l_val.to(device)
+            x_r_val = x_r_val.to(device)
+            y_val = y_val.to(device)
+            self.validation = True
+        else:
+            self.validation = False
+        logging.debug(
+            'X_left_size: {}, y_train.size: {}, X_right_size: {}'.format(X_left.size(), y_train.size(), X_right.size()))
+        # assert len(X_left) == len(y_train) == len(X_right)
+        len_dataset = len(X_left)
+        step = 0
+        # Initialize optimizer
+        # TODO: проследить, чтобы в optimizer'e обновлялись параметры при разморозке эмбеддингов
+        self.optimizer = self.optimizer(filter(lambda x: x.requires_grad, self.parameters()))
+        if clip:
+            _ = nn.utils.clip_grad_norm(self.parameters(), clip)
+        self.to(device)
+        print('Training...')
+        # self.optimizer.zero_grad()
+        for epoch in range(epochs):
+            start_time = time.time()
+            lb = 0
+            rb = batch_size
+            epoch_losses = []
+            while lb < len_dataset:
+                #TODO: Использовать torch data.DataLoader вместо этого
+                x_l_batch = X_left[:,lb:rb].to(device)
+                x_r_batch = X_right[:,lb:rb].to(device)
+                y_train_batch = y_train[lb:rb].t().to(device)
+                y_pred_batch = self.__call__(x_l_batch, x_r_batch)
+                a = y_pred_batch
+                b = y_train_batch.squeeze(1)
+                batch_loss = self.loss_function(a, b).to(device)
+                epoch_losses.append(batch_loss.item())
+                batch_loss.backward()
+                self.optimizer.step()
+                self.optimizer.zero_grad()
+                # update counters
+                rb += batch_size
+                lb += batch_size
+                step += 1
+                self.steps.append(step)
+                # progress bar
+                sys.stdout.write("")
+                sys.stdout.flush()
+            epoch_loss = np.mean(epoch_losses)
+            self.losses.append(epoch_loss)
+            end_time = time.time()
+            if self.validation:
+                with torch.no_grad():
+                    val_loss = self.validation_loss(x_l_val, x_r_val, y_val)
+                    self.val_losses.append(val_loss.item())
+                    print('Epoch: {}, loss: {:0.5f}. {:0.2} [s] per epoch. Val loss: {:0.5f}'.format(epoch, epoch_loss, end_time - start_time, val_loss))
+            else:
+                print('Epoch: {}, loss: {:0.5f}. {:0.2} [s] per epoch'.format(epoch, epoch_loss, end_time - start_time))
+
+        print('Done!')
 
 
 class SimpleNet(BaseModel):
     '''Самая простая сетка. Предложения кодируются в один вектор и сравниваются.'''
-    def __init__(self, vocab_size, embed_dim, hidden_size, emb_weights=None):
+    def __init__(self, vocab_size, embed_dim, hidden_size, emb_weights=None, dropout=None):
         super().__init__()
         self.vocab_size = vocab_size
         self.embed_dim = embed_dim
@@ -160,11 +167,13 @@ class SimpleNet(BaseModel):
         self.encoder_l = Encoder(self.vocab_size,
                                  self.embed_dim,
                                  self.hidden_size,
-                                 emb_weights=emb_weights)
+                                 emb_weights=emb_weights,
+                                 dropout=dropout)
         self.encoder_r = Encoder(self.vocab_size,
                                  self.embed_dim,
                                  self.hidden_size,
-                                 emb_weights=emb_weights)
+                                 emb_weights=emb_weights,
+                                 dropout=dropout)
         self.hidden = nn.Linear(hidden_size*2, 64)
         self.answer = nn.Linear(64, 2)
 
